@@ -61,11 +61,18 @@ Pada bagian ini saya menghilangkan beberapa data pada dataset. Alasan data ini d
 - Untuk **data kategorikal** menggunakan barchart terhadap fitur target, _traffic volume_. Untuk fitur holiday, kategori hari libur mempengaruhi hasil _traffic volume_ dan weather_main sedikit mempengaruhi _traffic volume_.
 
 ## Data Preparation
-Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
+Pada bagian ini saya akan menjelaskan data preparation
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan proses data preparation yang dilakukan
-- Menjelaskan alasan mengapa diperlukan tahapan data preparation tersebut.
+#### Data Preparation: One Hot Encoding
+One Hot Encoding ini merubah data kategorikal menjadi menjadi data numerik. Caranya adalah dengan memberikan nilai 1 pada kategori aslinya dan membirkan nilai 0 pada kategori lainnya. metode ini digunakan karena data kategori ini tidak memiliki hubungan ordinal dan Machine Learning umumnya tidak memproses tipe data string.
+
+#### Data Preparation: Split Data
+Pada bagian ini akan menjelaskan split data. Rasio split data yang digunakan adalah 90:10. Hal ini dikarenakan menurut saya data yang digunakan sudah cukup banyak dan ukuran test-set sudah mendekati 5000 instansi. Maka dari itu akan lebih baik jika jumlah data training jadi lebih banyak.
+
+#### Data Preparation: Feature Scaling
+Pada bagian ini saya menggunakan MinMaxScaler. MinMaxScaler ini merubah data sebagaimana hingga nilai data jatuh pada rentang 0-1. Cara bekerja MinMaxScaler ini adalah seperti yang diekspresikan berikut: <br/>
+`X_hat = (X - min) / (max - min)` <br/>
+MinMaxScaler digunakan karena fitur data yang akan diterapkan MinMaxScaler tidak memiliki outlier lalu rentang data yang dirubah tergolong tidak terlalu besar, sehingga informasi penting tidak akan hilang.
 
 ## Modeling
 Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
