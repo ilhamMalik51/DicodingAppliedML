@@ -37,13 +37,13 @@ fitur-fitur cuaca dan hari libur dengan tujuan untuk menjawab pengaruh fitur-fit
 ### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
 - holiday : merupakan data kategorikal yang menjelaskan hari libur nasional dan regional US.
 - temp : Merupakan data numerik yang menunjukan suhu dalam skala kelvin.
-- rain_1h : Merupakan data numerik untuk mengukur hujan yang menggunakan skala milimeter per jam 
-- snow_1h : Merupakan data numerik untuk mengukur salju yang menggunakan skala milimeter per jam
-- clouds_all : Merupakan data numerik presentasi 
-- weather_main :
-- weather_description :
-- date_time :
-- traffic_volume :
+- rain_1h : Merupakan data numerik untuk mengukur hujan yang menggunakan skala milimeter per jam.
+- snow_1h : Merupakan data numerik untuk mengukur salju yang menggunakan skala milimeter per jam.
+- clouds_all : Merupakan data numerik presentasi awan yang menutupi jalan tersebut.
+- weather_main : Merupakan data kategorikal yang menjelaskan deskripsi singkat keadaan cuaca pada daerah tersebut.
+- weather_description : Merupakan data kategorikal yang menjelaskan deskripsi panjang keadaan cuaca pada daerah tersebut.
+- date_time : Merupakan data bertipe date_time yang membagi dataset setiap jam.
+- traffic_volume : Merupakan data numerik yang menunjukan volume lalu lintas.
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
