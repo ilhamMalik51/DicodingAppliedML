@@ -45,8 +45,20 @@ fitur-fitur cuaca dan hari libur dengan tujuan untuk menjawab pengaruh fitur-fit
 - date_time : Merupakan data bertipe date_time yang membagi dataset setiap jam.
 - traffic_volume : Merupakan data numerik yang menunjukan volume lalu lintas.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
+#### Exploratory Data Analysis: Deskripsi Data
+Pada bagian ini saya memanfaatkan methode `head()`, `info()`, dan `describe()`. Untuk `head()` digunakan untuk melihat secara sekilas struktur data yang ada pada dataset. Metode `info()` digunakan untuk memeriksa tipe data pada setiap atribut. Terakhir, metode `describe()` digunakan untuk memeriksa anomali data atau missing value atau dapat juga untuk menemukan outlier.
+
+#### Exploratory Data Analysis: Missing Data
+Pada bagian ini saya menghilangkan beberapa data pada dataset. Alasan data ini dihapus adalah karena data yang mengandung _missing value_ masih sedikit. Data ini ditemukan melalui metode `describe()` yang dimana terdapat instansi yang memiliki temperatur suhu sebesar 0 kelvin. Hal ini tidak memungkinkan karena 0 kelvin itu sama saja dengan _absolute zero_ tidak mungkin diperoleh pada sistem yang besar. Maka dari itu saya menyelidiki nilai terendah selain 0 Kelvin, dan ditemukan nilai 243 Kelvin. Maka instans data yang memiliki nilai temp lebih kecil dari 243 Kelvin dihapuskan.
+
+#### Exploratory Data Analysis: Univariate Data
+- Untuk **data numerik** dilakukan teknik visualisasi data menggunakan histogram. Histogram ini untuk melihat ketersebaran data ditunjukan dari bentuk graph yang diberikan
+- Untuk **data kategorikal** dilakukan teknik visualisasi data menggunakan bar-chart. Bar-chart ini menunjukan jumlah instansi pada setiap kategori.
+- Untuk **data date_time** dilakukan pemisahan atau _feature engineering_ terlebih dahulu agar dapat divisualisasikan. Memanfaatkan library pandas untuk mengekstrak tahun, bulan, hari, dan jam. Setelah masing-masing nilai didapat, fitur-fitur tersebut dapat divisualisasikan.
+
+#### Exploratory Data Analysis: Multivariate Data
+- Untuk **data numerik** saya menggunakan method `corr_matrix` untuk melihat hubungan korelasi antar fitur terhadap target fitur. Pada bagian ini dapat diperoleh kesimpulan bahwa yang memiliki korelasi yang tidak mendekati 0 adalah **temp** dan **date_time_hour**
+- Untuk **data kategorikal** menggunakan barchart terhadap fitur target, _traffic volume_. Untuk fitur holiday, kategori hari libur mempengaruhi hasil _traffic volume_ dan weather_main sedikit mempengaruhi _traffic volume_.
 
 ## Data Preparation
 Pada bagian ini Anda menerapkan dan menyebutkan teknik data preparation yang dilakukan. Teknik yang digunakan pada notebook dan laporan harus berurutan.
