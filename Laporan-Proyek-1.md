@@ -4,45 +4,29 @@
 
 Traffic Volume, Predictive Analysis, Sosial 
 
-Perhitungan lalu lintas adalah perhitungan terhadap baik lalu lintas kendaraan atau pejalan kaki, dimana pada umumnya dilaksanakan sepanjang jalan tertentu atau persimpangan. Perhitungan lalu lintas menyediakan data yang dapat digunakan untuk menghitung perhitungan lalu lintas harian rata-rata yang dimana menjadi indikator umum sebagai representasi traffic volume. Tingginya traffic volume dapat menyebabkan berbagai masalah, salah satunya adalah kesempatan dan waktu yang terbuang percuma serta peningkatan stress terhadap kehidupan manusia[[Risk analysis of traffic congestion due to problem in heavy 
+Perhitungan lalu lintas adalah perhitungan terhadap baik lalu lintas kendaraan atau pejalan kaki, dimana pada umumnya dilaksanakan sepanjang jalan tertentu atau persimpangan. Perhitungan lalu lintas menyediakan data yang dapat digunakan untuk menghitung perhitungan lalu lintas harian rata-rata yang dimana menjadi indikator umum sebagai representasi Traffic Volume. Tingginya Traffic Volume dapat menyebabkan berbagai masalah, salah satunya adalah kesempatan dan waktu yang terbuang percuma serta peningkatan stress terhadap kehidupan manusia[[Risk analysis of traffic congestion due to problem in heavy 
 vehicles: a concept](https://iopscience.iop.org/article/10.1088/1757-899X/650/1/012011/meta)].
 
-Permasalahan ini perlu diselesaikan dengna tujuan agar meningkatkan kualitas hidup manusia dan meningkatkan efisiensi waktu yang digunakan selama perjalanan. Salah satu solusi adalah dengan memprediksikan traffic volume pada keadaan tertentu seperti waktu, dengan begitu seseorang dapat menghindari waktu tertentu untuk melewati jalan tersebut atau mencari alternatif jalan lain.
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Jelaskan mengapa dan bagaimana masalah tersebut harus diselesaikan
-- Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
-  
-  Format Referensi: [Judul Referensi](https://scholar.google.com/) 
+Permasalahan ini perlu diselesaikan dengna tujuan agar meningkatkan kualitas hidup manusia dan meningkatkan efisiensi waktu yang digunakan selama perjalanan. Salah satu solusi adalah dengan memprediksikan Traffic Volume pada keadaan tertentu seperti waktu, dengan begitu seseorang dapat menghindari waktu tertentu untuk melewati jalan tersebut atau mencari alternatif jalan lain.
 
 ## Business Understanding
-
-Pada bagian ini, kamu perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
 
 ### Problem Statements
 
 Menjelaskan pernyataan masalah latar belakang:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+- Seseorang tidak mengetahui pada keadaan apa saja yang menyebabkan Traffic Volume tinggi
+- Seseorang tidak dapat memprediksi apakah pada saat keadaan tertentu Traffic Volume sedang tinggi 
 
 ### Goals
 
 Menjelaskan tujuan dari pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
-- Jawaban pernyataan masalah n
+- Seseorang dapat mengetahui keadaan-keadaan yang menyebabkan Traffic Volume tinggi
+- Seseorang dapat memprediksikan keadaan Traffic Volume saat ini
 
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
-
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Statement” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
-
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution statement. Misalnya, menggunakan dua atau lebih algoritma untuk mencapai solusi yang diinginkan atau melakukan improvement pada baseline model dengan hyperparameter tuning.
-    - Solusi yang diberikan harus dapat terukur dengan metrik evaluasi.
+### Solution statements
+- Memberikan insight keadaan-keadaan yang berkorelasi terhadap Traffic Volume melalui visualisasi data
+- Mengajukan algoritma Linear Regresion dan Random Forest Regressor. 
+- Metrik yang dijadikan evaluasi adalah Root Mean Squarred Error (RMSE)
 
 ## Data Understanding
 Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
