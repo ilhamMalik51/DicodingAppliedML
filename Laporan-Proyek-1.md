@@ -1,8 +1,13 @@
-# Laporan Proyek Machine Learning - Nama Anda
+# Laporan Proyek Machine Learning - Muhammad Ilham Malik
 
 ## Domain Proyek
 
-Pada bagian ini, kamu perlu menuliskan latar belakang yang relevan dengan proyek yang diangkat.
+Traffic Volume, Predictive Analysis, Sosial 
+
+Perhitungan lalu lintas adalah perhitungan terhadap baik lalu lintas kendaraan atau pejalan kaki, dimana pada umumnya dilaksanakan sepanjang jalan tertentu atau persimpangan. Perhitungan lalu lintas menyediakan data yang dapat digunakan untuk menghitung perhitungan lalu lintas harian rata-rata yang dimana menjadi indikator umum sebagai representasi traffic volume. Tingginya traffic volume dapat menyebabkan berbagai masalah, salah satunya adalah kesempatan dan waktu yang terbuang percuma serta peningkatan stress terhadap kehidupan manusia[[Risk analysis of traffic congestion due to problem in heavy 
+vehicles: a concept](https://iopscience.iop.org/article/10.1088/1757-899X/650/1/012011/meta)].
+
+Permasalahan ini perlu diselesaikan dengna tujuan agar meningkatkan kualitas hidup manusia dan meningkatkan efisiensi waktu yang digunakan selama perjalanan. Salah satu solusi adalah dengan memprediksikan traffic volume pada keadaan tertentu seperti waktu, dengan begitu seseorang dapat menghindari waktu tertentu untuk melewati jalan tersebut atau mencari alternatif jalan lain.
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Jelaskan mengapa dan bagaimana masalah tersebut harus diselesaikan
