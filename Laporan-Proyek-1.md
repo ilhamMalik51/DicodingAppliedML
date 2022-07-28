@@ -29,14 +29,21 @@ Menjelaskan tujuan dari pernyataan masalah:
 - Metrik yang dijadikan evaluasi adalah Root Mean Squarred Error (RMSE)
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai data yang Anda gunakan dalam proyek. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Dataset Metro Interstate Traffic Volume merupakan dataset yang mengukur volume lalu lintas jalan Westbound Interstate-94, serta mengukur
+fitur-fitur cuaca dan hari libur dengan tujuan untuk menjawab pengaruh fitur-fitur tersebut terhadap traffic volume.
 
-Selanjutnya uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+[Metro Interstate Traffic Volume Data Set](https://archive.ics.uci.edu/ml/datasets/Metro+Interstate+Traffic+Volume). 
 
 ### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+- holiday : merupakan data kategorikal yang menjelaskan hari libur nasional dan regional US.
+- temp : Merupakan data numerik yang menunjukan suhu dalam skala kelvin.
+- rain_1h : Merupakan data numerik untuk mengukur hujan yang menggunakan skala milimeter per jam 
+- snow_1h : Merupakan data numerik untuk mengukur salju yang menggunakan skala milimeter per jam
+- clouds_all : Merupakan data numerik presentasi 
+- weather_main :
+- weather_description :
+- date_time :
+- traffic_volume :
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data atau exploratory data analysis.
