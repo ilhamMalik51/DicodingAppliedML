@@ -25,7 +25,7 @@ Menjelaskan tujuan dari pernyataan masalah:
 
 ### Solution statements
 - Memberikan insight keadaan-keadaan yang berkorelasi terhadap Traffic Volume melalui visualisasi data
-- Mengajukan algoritma Linear Regresion dan Random Forest Regressor. 
+- Mengajukan algoritma Linear Regresion, Decision Tree Regressor dan Random Forest Regressor. 
 - Metrik yang dijadikan evaluasi adalah Root Mean Squarred Error (RMSE)
 
 ## Data Understanding
@@ -75,12 +75,21 @@ Pada bagian ini saya menggunakan MinMaxScaler. MinMaxScaler ini merubah data seb
 MinMaxScaler digunakan karena fitur data yang akan diterapkan MinMaxScaler tidak memiliki outlier lalu rentang data yang dirubah tergolong tidak terlalu besar, sehingga informasi penting tidak akan hilang.
 
 ## Modeling
-Tahapan ini membahas mengenai model machine learning yang digunakan untuk menyelesaikan permasalahan. Anda perlu menjelaskan tahapan dan parameter yang digunakan pada proses pemodelan.
+Pada bagian modeling saya bereksperimen dengan tiga buah model yaitu Linear Regression, Decision Tree Regressor, dan Random Forest Regressor.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan kelebihan dan kekurangan dari setiap algoritma yang digunakan.
-- Jika menggunakan satu algoritma pada solution statement, lakukan proses improvement terhadap model dengan hyperparameter tuning. **Jelaskan proses improvement yang dilakukan**.
-- Jika menggunakan dua atau lebih algoritma pada solution statement, maka pilih model terbaik sebagai solusi. **Jelaskan mengapa memilih model tersebut sebagai model terbaik**.
+#### Linear Regression
+Kelebihan dari linear regression ini merupakan model yang paling sederhana dibandingkan model lain yang digunakan dalam eksperimen ini, selain itu kelebihan lainnya adalah waktu training yang cepat.
+Kekurangan dari model ini adalah karena model ini termasuk yang paling sederhana, maka model ini masih mengalami underfitting terhadap dataset.
+
+#### Decision Tree Regressor
+Kelebihan dari Decision Tree Regressor adalah model ini dapat mempelajari hubungan non-linear.
+Kekurangan dari Decision Tree Regressor pada kasus ini adalah karena model ini lebih kompleks daripada linear regression, model ini lebih rentan terkena overfitting terhadap dataset.
+
+#### Random Forest Regressor
+Kelebihan dari Random Forest Regressor adalah karena model ini merupakan Ensemble Machine Learning, maka model ini merupakan yang paling kompleks.
+Kekurangan dari Random Forest Regressor adalah model ini memiliki waktu training yang cukup lama dibanding model yang lain, dan masih terdapat overfitting terhadap dataset.
+
+Berdasarkan hasil eksperimen, model terbaik yang dijadikan sebagai solusi adalah **Random Forest Regressor.**
 
 ## Evaluation
 Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
