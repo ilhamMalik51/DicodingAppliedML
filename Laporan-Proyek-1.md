@@ -92,19 +92,28 @@ Kekurangan dari Random Forest Regressor adalah model ini memiliki waktu training
 Berdasarkan hasil eksperimen, model terbaik yang dijadikan sebagai solusi adalah **Random Forest Regressor.**
 
 ## Evaluation
-Pada bagian ini anda perlu menyebutkan metrik evaluasi yang digunakan. Lalu anda perlu menjelaskan hasil proyek berdasarkan metrik evaluasi yang digunakan.
+Pada proyek ini metrik evaluasi yang digunakan adalah _Root Mean Squarred Error_. Alasan menggunakan RMSE adalah karena metrik ini memiliki presisi yang cukup tinggi dan dataset yang digunakan tidak memiliki _outlier_ sehingga dapat menggunakan RMSE sebagai metrik evaluasi.
 
-Sebagai contoh, Anda memiih kasus klasifikasi dan menggunakan metrik **akurasi, precision, recall, dan F1 score**. Jelaskan mengenai beberapa hal berikut:
-- Penjelasan mengenai metrik yang digunakan
-- Menjelaskan hasil proyek berdasarkan metrik evaluasi
+| Models           | Train_rmse    | Test_rmse   |
+| -------------    |:-------------:| -----------:|
+| LinearRegression | 1837.979158	 | 1847.533254 |
+| DTRegressor      | 225.672612    | 1307.898144 |
+| RFRegressor      | 419.347272    | 1067.031678 |
 
-Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, problem statement, dan solusi yang diinginkan.
+Berdasarkan hasil di atas dapat diambil kesimpulan bahwa model yang terbaik untuk menjadi solusi adalah **Random Forest Regressor.**
+Hal ini dikarenakan RMSE menghitung jarak prediksi terhadap nilai asli. Selain itu, Random Forest Regressor mengalami overfitting namun tidak
+lebih parah dibandingkan **Decision Tree Regressor.**
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
+### Formula RMSE dapat dilihat pada gambar berikut
+![Formula RMSE](https://miro.medium.com/max/966/1*lqDsPkfXPGen32Uem1PTNg.png)
+Keterangan:
+
+- n     : jumlah banyak data
+- y_hat : merupakan prediksi model
+- y     : merupakan nilai target
+
+Untuk menjawab permasalahan pada bagian Problem Statement, dapat diurutkan sebagai berikut:
+1. Penyebab Tingginya Traffic Volume dipengaruhi oleh **pukul waktu** dan **temperatur** saat itu.
+2. Jika seseorang mengetahui keadaan dan temperatur saat itu, dengan memanfaatkan model Machine Learning, orang tersebut dapat memprediksikan traffic volume pada saat itu juga.
 
 **---Ini adalah bagian akhir laporan---**
-
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
