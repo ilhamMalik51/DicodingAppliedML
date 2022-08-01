@@ -104,6 +104,7 @@ lebih parah dibandingkan **Decision Tree Regressor.**
 
 ### Formula RMSE dapat dilihat pada gambar berikut
 ![Formula RMSE](https://miro.medium.com/max/966/1*lqDsPkfXPGen32Uem1PTNg.png)
+
 Keterangan:
 
 - n     : jumlah banyak data
@@ -117,7 +118,9 @@ Untuk menjawab permasalahan pada bagian Problem Statement, dapat diurutkan sebag
 
 ## Referensi
 [1].Bharadwaj, Shashank, Sudheer Ballare, and Munish K. Chandel. "Impact of congestion on greenhouse gas emissions for road transport in Mumbai metropolitan region." Transportation Research Procedia 25 (2017): 3538-3551.
+
 [2].Hopkins, John L., and Judith McKay. "Investigating ‘anywhere working’as a mechanism for alleviating traffic congestion in smart cities." Technological Forecasting and Social Change 142 (2019): 258-272.
+
 [3].Kesuma, P. A., M. A. Rohman, and C. A. Prastyanto. "Risk analysis of traffic congestion due to problem in heavy vehicles: a concept." IOP Conference Series: Materials Science and Engineering. Vol. 650. No. 1. IOP Publishing, 2019.
 
 
