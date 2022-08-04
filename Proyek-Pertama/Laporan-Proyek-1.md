@@ -44,7 +44,17 @@ Untuk detail lebih lanjut mengenai dataset, dapat dilihat pada [Metro Interstate
 - traffic_volume : Merupakan data numerik yang menunjukan volume lalu lintas.
 
 #### Exploratory Data Analysis: Deskripsi Data
-Pada bagian ini saya memanfaatkan methode `head()`, `info()`, dan `describe()`. Untuk `head()` digunakan untuk melihat secara sekilas struktur data yang ada pada dataset. Metode `info()` digunakan untuk memeriksa tipe data pada setiap atribut. Terakhir, metode `describe()` digunakan untuk memeriksa anomali data atau missing value atau dapat juga untuk menemukan outlier.
+Pada bagian ini saya memanfaatkan method `head()`, `info()`, dan `describe()`. Untuk `head()` digunakan untuk melihat secara sekilas struktur data yang ada pada dataset. Metode `info()` digunakan untuk memeriksa tipe data pada setiap atribut. Terakhir, metode `describe()` digunakan untuk memeriksa anomali data atau missing value atau dapat juga untuk menemukan outlier.
+
+Berikut adalah merupakan kode yang digunakan untuk melihat 10 data teratas dari dataset. Kode di bawah ini menggunakan `head()` method yang ada pada objek DataFrame.
+
+```
+df = pd.read_csv("Metro_Interstate_Traffic_Volume.csv")
+df.head(10)
+```
+![df_head_screenshot](https://github.com/ilhamMalik51/DicodingAppliedML/blob/b6f010b50202bf8bce08dbd8993f2d58fdd0ab22/Proyek-Pertama/assets/df_head_function_ss.JPG)
+
+Berdasarkan hasil keluaran dari method `head()` tersebut bahwa dataset tersebut memiliki 9 atribut. Dari ke-9 atribut tersebut, terdapat 3 atribut yang sepertinya merupakan tipe data string. Namun nilai dari tipe data string tersebut terdapat nilai yang berulang, jika dilihat baris pertama hingga baris kelima memiliki nilai "clouds", dapat diasumsikan bahwa tipe data dari atribut tersebut merupakan kategorikal. Selain itu terdapat attribut date_time dengan tipe data date-time. Dalam bentuknya yang sekarang nilai pada atribut tersebut belum bisa dianalisis lebih lanjut, maka dari itu atribut ini perlu diproses lebih lanjut dengan tujuan agar ditemukan pola lain selain dari kesembilan fitur-fitur yang sudah ada. 
 
 #### Exploratory Data Analysis: Missing Data
 Pada bagian ini saya menghilangkan beberapa data pada dataset. Alasan data ini dihapus adalah karena data yang mengandung _missing value_ masih sedikit. Data ini ditemukan melalui metode `describe()` yang dimana terdapat instansi yang memiliki temperatur suhu sebesar 0 kelvin. Hal ini tidak memungkinkan karena 0 kelvin itu sama saja dengan _absolute zero_ tidak mungkin diperoleh pada sistem yang besar. Maka dari itu saya menyelidiki nilai terendah selain 0 Kelvin, dan ditemukan nilai 243 Kelvin. Maka instansi data yang memiliki nilai temp lebih kecil dari 243 Kelvin dihapuskan.
