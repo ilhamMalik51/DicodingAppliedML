@@ -65,6 +65,19 @@ df.info()
 
 Berdasar gambar tersebut dapat diperhatikan bahwa setiap fitur memiliki jumlah nilai data _nonnull_ sebanyak 48204 baris. Hal ini berarti pada setiap fitur tidak terdapat _missing value_. Selain itu, seperti yang telah disinggung sebelumnya terdapat tipe data _object_. Tipe data _object_ ini berarti merupakan semua Python's object, karena dataset ini memiliki format CSV maka tipe data tersebut umumnya text/string.
 
+Selanjutnya terdapat method `describe()`. Method ini akan menampilkan ringkasan statistik dari atribut-atribut numerik.
+
+```
+df.describe()
+```
+
+![df_describe_screenshot](https://github.com/ilhamMalik51/DicodingAppliedML/blob/f50166b307a9448804d369fc2a691adfa6de2ae5/Proyek-Pertama/assets/df_describe_ss.JPG)
+
+Berdasarkan gambar di atas dapat dilihat ringkasan singkat terkait atribut-atribut numerik yang ada pada dataset. Baris _count_, _mean_, _min_, dan _max_ merupakan baris yang menunjukan jumlah baris, rata-rata, nilai minimum, dan nilai maksimum. Terdapat beberapa hal yang menjadi perhatian dari tabel tersebut:
+
+1. Nilai minimum dari atribut **temp** adalah 0, kita ketahui sebelumnya bahwa atribut temperatur tersebut berada pada skala kelvin dimana nilai 0 derajat kelvin (absolut zero) merupakan hal yang tidak mungkin terjadi selama pengamatan jalan perkotaan. Maka dari itu, baris data yang memiliki nilai atribut **temp** 0 derajat akan di-_drop_.
+2. Nilai kedua atribut **rain_1h** dan **snow_1h** pada kuartil pertama (_percentile_ 25%), kuartil kedua (_percentile_ 50%), dan kuartil ketiga (_percentile_ 75%) memiliki nilai yang sama yaitu 0. Hal ini berarti bahwa nilai data yang ada di atribut tersebut hampir seluruhnya bernilai 0 atau dengan kata lain nilai bukan 0 pada atribut tersebut jumlahnya sangat sedikit. Oleh karena itu, kedua fitur ini memiliki kemungkinan yang besar untuk tidak digunakan saat pelatihan model Machine Learning.
+
 #### Exploratory Data Analysis: Missing Data
 Pada bagian ini saya menghilangkan beberapa data pada dataset. Alasan data ini dihapus adalah karena data yang mengandung _missing value_ masih sedikit. Data ini ditemukan melalui metode `describe()` yang dimana terdapat instansi yang memiliki temperatur suhu sebesar 0 kelvin. Hal ini tidak memungkinkan karena 0 kelvin itu sama saja dengan _absolute zero_ tidak mungkin diperoleh pada sistem yang besar. Maka dari itu saya menyelidiki nilai terendah selain 0 Kelvin, dan ditemukan nilai 243 Kelvin. Maka instansi data yang memiliki nilai temp lebih kecil dari 243 Kelvin dihapuskan.
 
