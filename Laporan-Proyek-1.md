@@ -22,15 +22,15 @@ Menjelaskan tujuan dari pernyataan masalah:
 - Seseorang dapat memprediksikan keadaan Traffic Volume saat ini
 
 ### Solution statements
-- Memberikan insight keadaan-keadaan yang berkorelasi terhadap Traffic Volume melalui visualisasi data
-- Mengajukan algoritma Linear Regresion, Decision Tree Regressor dan Random Forest Regressor. 
-- Metrik yang dijadikan evaluasi adalah Root Mean Squared Error (RMSE)
+- Memberikan insight keadaan-keadaan yang berkorelasi terhadap Traffic Volume melalui visualisasi data.
+- Mengajukan algoritma Linear Regresion, Decision Tree Regressor dan Random Forest Regressor untuk memprediksi Traffic Volume. 
+- Metrik yang dijadikan evaluasi model adalah Root Mean Squared Error (RMSE).
 
 ## Data Understanding
 Dataset Metro Interstate Traffic Volume merupakan dataset yang mengukur volume lalu lintas jalan Westbound Interstate-94, serta mengukur
 fitur-fitur cuaca dan hari libur dengan tujuan untuk menjawab pengaruh fitur-fitur tersebut terhadap traffic volume.
 
-[Metro Interstate Traffic Volume Data Set](https://archive.ics.uci.edu/ml/datasets/Metro+Interstate+Traffic+Volume). 
+Untuk detail lebih lanjut mengenai dataset, dapat dilihat pada [Metro Interstate Traffic Volume Data Set](https://archive.ics.uci.edu/ml/datasets/Metro+Interstate+Traffic+Volume). 
 
 ### Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
 - holiday : merupakan data kategorikal yang menjelaskan hari libur nasional dan regional US.
