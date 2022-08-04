@@ -56,6 +56,15 @@ df.head(10)
 
 Berdasarkan hasil keluaran dari method `head()` tersebut bahwa dataset tersebut memiliki 9 atribut. Dari ke-9 atribut tersebut, terdapat 3 atribut yang sepertinya merupakan tipe data string. Namun nilai dari tipe data string tersebut terdapat nilai yang berulang, jika dilihat baris pertama hingga baris kelima memiliki nilai "clouds", dapat diasumsikan bahwa tipe data dari atribut tersebut merupakan kategorikal. Selain itu terdapat attribut date_time dengan tipe data date-time. Dalam bentuknya yang sekarang nilai pada atribut tersebut belum bisa dianalisis lebih lanjut, maka dari itu atribut ini perlu diproses lebih lanjut dengan tujuan agar ditemukan pola lain selain dari kesembilan fitur-fitur yang sudah ada. 
 
+Selain itu terdapat method yang dapat melihat deskripsi dataset, khususnya akan menampilkan seluruh jumlah baris dataset, tipe setiap atribut dataset, dan jumlah nilai _nonnull_. Method tersebut adalah method `info()` yang terdapat pada DataFrame object.
+
+```
+df.info()
+```
+![df_info_screenshot](https://github.com/ilhamMalik51/DicodingAppliedML/blob/0995b60c3e21aba1785bb6967aa2dcf8e059c128/Proyek-Pertama/assets/df_info_function_Ss.JPG)
+
+Berdasar gambar tersebut dapat diperhatikan bahwa setiap fitur memiliki jumlah nilai data _nonnull_ sebanyak 48204 baris. Hal ini berarti pada setiap fitur tidak terdapat _missing value_. Selain itu, seperti yang telah disinggung sebelumnya terdapat tipe data _object_. Tipe data _object_ ini berarti merupakan semua Python's object, karena dataset ini memiliki format CSV maka tipe data tersebut umumnya text/string.
+
 #### Exploratory Data Analysis: Missing Data
 Pada bagian ini saya menghilangkan beberapa data pada dataset. Alasan data ini dihapus adalah karena data yang mengandung _missing value_ masih sedikit. Data ini ditemukan melalui metode `describe()` yang dimana terdapat instansi yang memiliki temperatur suhu sebesar 0 kelvin. Hal ini tidak memungkinkan karena 0 kelvin itu sama saja dengan _absolute zero_ tidak mungkin diperoleh pada sistem yang besar. Maka dari itu saya menyelidiki nilai terendah selain 0 Kelvin, dan ditemukan nilai 243 Kelvin. Maka instansi data yang memiliki nilai temp lebih kecil dari 243 Kelvin dihapuskan.
 
