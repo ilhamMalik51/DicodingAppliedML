@@ -43,7 +43,7 @@ Untuk detail lebih lanjut mengenai dataset, dapat dilihat pada [Metro Interstate
 - date_time : Merupakan data bertipe date_time yang membagi dataset setiap jam.
 - traffic_volume : Merupakan data numerik yang menunjukan volume lalu lintas.
 
-#### Exploratory Data Analysis: Deskripsi Data
+### Exploratory Data Analysis: Deskripsi Data
 Pada bagian ini saya memanfaatkan method `head()`, `info()`, dan `describe()`. Untuk `head()` digunakan untuk melihat secara sekilas struktur data yang ada pada dataset. Metode `info()` digunakan untuk memeriksa tipe data pada setiap atribut. Terakhir, metode `describe()` digunakan untuk memeriksa anomali data atau missing value atau dapat juga untuk menemukan outlier.
 
 Berikut adalah merupakan kode yang digunakan untuk melihat 10 data teratas dari dataset. Kode di bawah ini menggunakan `head()` method yang ada pada objek DataFrame.
@@ -90,7 +90,7 @@ df["weather_main"].value_counts()
 
 Hasil dari kode tersebut merupakan salah satu contoh keluaran data kategorikal. Jadi dapat dipastikan bahwa ketiga data tersebut merupakan data kategorikal dimana atribut **holiday** memiliki 11 kategori, atribut **weather_main** memiliki 11 kategori, dan **weather_description** memiliki 38 kategori.
 
-#### Exploratory Data Analysis: Data Cleaning
+### Exploratory Data Analysis: Data Cleaning
 Berdasarkan temuan pada bagian sebelumnya bahwa terdapat baris data dimana nilai atribut **temp** adalah 0. Seperti yang telah disinggung pada bagian tersebut, suhu 0 derajat kelvin tidak mungkin terjadi ketika observasi dataset tersebut. Maka dari itu jika diperiksa menggunakan kode di bawah ini maka akan terlihat baris data yang memiliki nilai atribut **temp** 0 derajat Kelvin.
 
 ```
@@ -110,7 +110,7 @@ df.describe()
 
 ![df_describe_after_dropped_row_data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/0e02b42be2ba4fdf27201666786ab22482a37be3/Proyek-Pertama/assets/df_dropped_zero_kelvin_data.JPG)
 
-#### Exploratory Data Analysis: Feature Engineering
+### Exploratory Data Analysis: Feature Engineering
 Sebelum dapat menganalisis lebih lanjut dengan visualisasi data, terdapat satu atribut yang perlu dirubah. Atribut **date_time** yang sekarang kurang memberikan _insight_ yang diperlukan. Oleh karena itu, nilai atribut tersebut dapat dilakukan _feature engineering_ untuk memisahkan setiap nilai yang ada pada data tersebut. Nilai-nilai yang akan saya ambil adalah tahun, bulan, minggu, hari dan jam. Dengan memisahkan nilai-nilai tersebut ditemukan pola/_insight_ lain saat visualisasi data nantinya.
 
 Berikut merupakan cara untuk mengambil nilai-nilai tersebut. Pertama, karena tipe data yang ditampilkan masih `object` maka perlu terlebih dahulu dirubah menjadi format `datetime64`. Setelah itu, setiap nilai data dapat diambil nilainya dan disimpan pada kolom atribut baru.
@@ -127,25 +127,63 @@ df["date_time_hour"] = df["date_time"].dt.hour
 ```
 Setelah kode tersebut dijalankan maka kolom dataset akan bertambah sebanya 4 kolom ke sebelah kanan. Perubahan ini dapat dilihat menggunakan method `head()` atau method `info()` seperti yang telah dijelaskan pada bagian sebelumnya.
 
-#### Exploratory Data Analysis: Univariate Data
-- Untuk **data numerik** dilakukan teknik visualisasi data menggunakan histogram. Histogram ini untuk melihat ketersebaran data ditunjukan dari bentuk graph yang diberikan
-- Untuk **data kategorikal** dilakukan teknik visualisasi data menggunakan bar-chart. Bar-chart ini menunjukan jumlah instansi pada setiap kategori.
-- Untuk **data date_time** dilakukan pemisahan atau _feature engineering_ terlebih dahulu agar dapat divisualisasikan. Memanfaatkan library pandas untuk mengekstrak tahun, bulan, hari, dan jam. Setelah masing-masing nilai didapat, fitur-fitur tersebut dapat divisualisasikan.
+### Exploratory Data Analysis: Univariate Data
+#### Data Numerik
+Pada bagian ini akan dilakukan analisis menggunakan teknik univariate EDA. Kode di bawah ini akan menampilkan histogram terkait fitur-fitur numerik yang ada pada dataset. Histogram menunjukan jumlah baris data (sumbu Y) jika diberikan rentang nilai yang ada pada sumbu X.
 
-#### Exploratory Data Analysis: Multivariate Data
+```
+df.hist(bins=100, figsize=(20, 15))
+plt.show()
+```
+
+![df_histogram_show](https://github.com/ilhamMalik51/DicodingAppliedML/blob/68a79f2accfd3e9432b0ae8d90afd40ac017f558/Proyek-Pertama/assets/hist_numeric_data.png)
+
+Berdasarkan histogram di atas dapat diambil beberapa kesimpulan, antara lain:
+1. Atribut-atribut numerik yang ditampilkan memiliki skala yang berbeda-beda, hal ini akan mempengaruhi unjuk kerja dari model Machine Learning yang digunakan.
+2. Sesuai asumsi yang sudah disinggung sebelumnya, pada nilai-nilai atribut **rain_1h** dan **snow_1h** lebih dari 48000 baris data atau sekitar 99% data terletak pada nilai 0. Oleh karena itu, ada kemungkinan besar atribut ini tidak akan berpengaruh terhadap nilai prediksi model.
+3. Terdapat lebih dari 2000 baris data yang memiliki _traffic volume_ kurang dari 1000.
+
+#### Data Kategorikal
+Setelah memeriksa visualisasi untuk tipe data numerik, saatnya menganalisis fitur-fitur tipe data kategorikal. Pada tipe data kategorikal ini dapat menggunakan visualisasi data bar chart. Berikut kode beserta hasil visualisasi data tersebut.
+
+```
+df["weather_main"].value_counts().plot(kind="bar", title="Weather Main")
+```
+
+![weather_main_categorical](https://github.com/ilhamMalik51/DicodingAppliedML/blob/2dde42d5b6cfbe9b3ba00da65d08b0d2c9091774/Proyek-Pertama/assets/bar_chart_weather_main.png)
+
+Berdasarkan gambar tersebut dapat disimpulkan bahwa 50% dari sampel memiliki keadaan cuaca yang berawan dan cerah.
+
+```
+df["weather_description"].value_counts().plot(kind="bar", title="Weather Description")
+```
+
+![weather_desc_categorical](https://github.com/ilhamMalik51/DicodingAppliedML/blob/2dde42d5b6cfbe9b3ba00da65d08b0d2c9091774/Proyek-Pertama/assets/bar_chart_weather_desc.png)
+
+Berdasarkan gambar tersebut, karena fitur ini merupakan deskripsi lanjutan daripada atribut **weather_main** maka deskripsi sampel terbanyak merupakan "sky is clear". Sesuai dengan visualisasi sebelumnya, pada visualisasi ini cuaca mendung terbagi menjadi tiga kategori seperti "mist", "overcast clouds", "broken clouds", dan "scattered clouds". Jika ketiga kategori tersebut dijumlahkan maka terdapat 50% observasi data yang mendeskripsikan cuaca yang cerah dan mendung.
+
+```
+df["holiday"].value_counts().plot(kind="bar", title="Holiday")
+```
+
+![holiday_categorical](https://github.com/ilhamMalik51/DicodingAppliedML/blob/2dde42d5b6cfbe9b3ba00da65d08b0d2c9091774/Proyek-Pertama/assets/bar_chart_holiday.png)
+
+Berdasarkan gambar di atas, dapat disimpulkan bahwa lebih dari 97% sampel data observasi bukan merupakan hari libur.
+
+### Exploratory Data Analysis: Multivariate Data
 - Untuk **data numerik** saya menggunakan method `corr_matrix` untuk melihat hubungan korelasi antar fitur terhadap target fitur. Pada bagian ini dapat diperoleh kesimpulan bahwa yang memiliki korelasi yang tidak mendekati 0 adalah **temp** dan **date_time_hour**
 - Untuk **data kategorikal** menggunakan barchart terhadap fitur target, _traffic volume_. Untuk fitur holiday, kategori hari libur mempengaruhi hasil _traffic volume_ dan weather_main sedikit mempengaruhi _traffic volume_.
 
 ## Data Preparation
 Pada bagian ini saya akan menjelaskan data preparation
 
-#### Data Preparation: One Hot Encoding
+### Data Preparation: One Hot Encoding
 One Hot Encoding ini merubah data kategorikal menjadi menjadi data numerik. Caranya adalah dengan memberikan nilai 1 pada kategori aslinya dan membiarkan nilai 0 pada kategori lainnya. metode ini digunakan karena data kategori ini tidak memiliki hubungan ordinal dan Machine Learning umumnya tidak memproses tipe data string.
 
-#### Data Preparation: Split Data
+### Data Preparation: Split Data
 Pada bagian ini akan menjelaskan split data. Rasio split data yang digunakan adalah 90:10. Hal ini dikarenakan menurut saya data yang digunakan sudah cukup banyak dan ukuran test-set sudah mendekati 5000 instansi. Maka dari itu akan lebih baik jika jumlah data training jadi lebih banyak.
 
-#### Data Preparation: Feature Scaling
+### Data Preparation: Feature Scaling
 Pada bagian ini saya menggunakan MinMaxScaler. MinMaxScaler ini merubah data sebagaimana hingga nilai data jatuh pada rentang 0-1. Cara bekerja MinMaxScaler ini adalah seperti yang diekspresikan berikut: <br/>
 `X_hat = (X - min) / (max - min)` <br/>
 MinMaxScaler digunakan karena fitur data yang akan diterapkan MinMaxScaler tidak memiliki outlier lalu rentang data yang diubah tergolong tidak terlalu besar, sehingga informasi penting tidak akan hilang.
@@ -153,15 +191,15 @@ MinMaxScaler digunakan karena fitur data yang akan diterapkan MinMaxScaler tidak
 ## Modeling
 Pada bagian modeling saya bereksperimen dengan tiga buah model yaitu Linear Regression, Decision Tree Regressor, dan Random Forest Regressor.
 
-#### Linear Regression
+### Linear Regression
 Kelebihan dari linear regression ini merupakan model yang paling sederhana dibandingkan model lain yang digunakan dalam eksperimen ini, selain itu kelebihan lainnya adalah waktu training yang cepat.
 Kekurangan dari model ini adalah karena model ini termasuk yang paling sederhana, maka model ini masih mengalami underfitting terhadap dataset.
 
-#### Decision Tree Regressor
+### Decision Tree Regressor
 Kelebihan dari Decision Tree Regressor adalah model ini dapat mempelajari hubungan non-linear.
 Kekurangan dari Decision Tree Regressor pada kasus ini adalah karena model ini lebih kompleks daripada linear regression, model ini lebih rentan terkena overfitting terhadap dataset.
 
-#### Random Forest Regressor
+### Random Forest Regressor
 Kelebihan dari Random Forest Regressor adalah karena model ini merupakan Ensemble Machine Learning, maka model ini merupakan yang paling kompleks.
 Kekurangan dari Random Forest Regressor adalah model ini memiliki waktu training yang cukup lama dibanding model yang lain, dan masih terdapat overfitting terhadap dataset.
 
