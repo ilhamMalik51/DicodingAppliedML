@@ -146,6 +146,8 @@ Berdasarkan histogram di atas dapat diambil beberapa kesimpulan, antara lain:
 #### Data Kategorikal
 Setelah memeriksa visualisasi untuk tipe data numerik, saatnya menganalisis fitur-fitur tipe data kategorikal. Pada tipe data kategorikal ini dapat menggunakan visualisasi data bar chart. Berikut kode beserta hasil visualisasi data tersebut.
 
+#### Fitur Weather Main
+
 ```
 df["weather_main"].value_counts().plot(kind="bar", title="Weather Main")
 ```
@@ -154,6 +156,8 @@ df["weather_main"].value_counts().plot(kind="bar", title="Weather Main")
 
 Berdasarkan gambar tersebut dapat disimpulkan bahwa 50% dari sampel memiliki keadaan cuaca yang berawan dan cerah.
 
+#### Fitur Weather Description
+
 ```
 df["weather_description"].value_counts().plot(kind="bar", title="Weather Description")
 ```
@@ -161,6 +165,9 @@ df["weather_description"].value_counts().plot(kind="bar", title="Weather Descrip
 ![weather_desc_categorical](https://github.com/ilhamMalik51/DicodingAppliedML/blob/2dde42d5b6cfbe9b3ba00da65d08b0d2c9091774/Proyek-Pertama/assets/bar_chart_weather_desc.png)
 
 Berdasarkan gambar tersebut, karena fitur ini merupakan deskripsi lanjutan daripada atribut **weather_main** maka deskripsi sampel terbanyak merupakan "sky is clear". Sesuai dengan visualisasi sebelumnya, pada visualisasi ini cuaca mendung terbagi menjadi tiga kategori seperti "mist", "overcast clouds", "broken clouds", dan "scattered clouds". Jika ketiga kategori tersebut dijumlahkan maka terdapat 50% observasi data yang mendeskripsikan cuaca yang cerah dan mendung.
+
+
+#### Fitur Holiday
 
 ```
 df["holiday"].value_counts().plot(kind="bar", title="Holiday")
@@ -171,8 +178,95 @@ df["holiday"].value_counts().plot(kind="bar", title="Holiday")
 Berdasarkan gambar di atas, dapat disimpulkan bahwa lebih dari 97% sampel data observasi bukan merupakan hari libur.
 
 ### Exploratory Data Analysis: Multivariate Data
-- Untuk **data numerik** saya menggunakan method `corr_matrix` untuk melihat hubungan korelasi antar fitur terhadap target fitur. Pada bagian ini dapat diperoleh kesimpulan bahwa yang memiliki korelasi yang tidak mendekati 0 adalah **temp** dan **date_time_hour**
-- Untuk **data kategorikal** menggunakan barchart terhadap fitur target, _traffic volume_. Untuk fitur holiday, kategori hari libur mempengaruhi hasil _traffic volume_ dan weather_main sedikit mempengaruhi _traffic volume_.
+
+#### Data Numerik
+Machine learning akan bekerja lebih baik pada fitur-fitur yang memiliki korelasi linear yang kuat Dapat dilihat bahwa nilai korelasi yang ada pada dataset terhadap atribut label. Nilai korelasi linear ini jatuh pada rentang -1 dan 1, dimana semakin mendekati nilai 1 berarti memiliki korelasi linear positif yang kuat dan apabila mendekati -1 memiliki korelasi linear negatif yang kuat.
+
+Berikut kode yang digunakan untuk menampilkan korelasi linear terhadap fitur target **traffic volume**.
+
+```
+corr_matrix = df.corr()
+corr_matrix["traffic_volume"].sort_values(ascending=False)
+```
+
+![linear_correlation_traffic_volume](https://github.com/ilhamMalik51/DicodingAppliedML/blob/c34afcdde7f9197e2b0b11ec08f48bb262b26a03/Proyek-Pertama/assets/linear_correlation_target_feature.JPG)
+
+Berdasarkan gambar di atas, sudah dapat terlihat fitur-fitur yang memiliki hubungan korelasi linear adalah fitur **date_time** dan **temp**. Atribut selain yang disebutkan sebelumnya memiliki nilai linear yang mendekati 0. Hal ini berarti bahwa fitur-fitur ini memiliki hubungan korelasi linear yang sangat lemah.
+
+Selain itu, agar dapat terlihat lebih jelas, fitur-fitur tersebut dapat divisualisasikan terhadap nilai targetnya menggunakan scatter plot. Teknik ini juga dinamakan teknik multivariate EDA. Agar dapat melakukan hal tersebut, dapat menggunakan kode sebagai berikut.
+
+```
+numerical_attributes = ["temp", "date_time_hour", "clouds_all", 
+                        "traffic_volume"]
+
+scatter_matrix(df[numerical_attributes], figsize=(12, 8))
+```
+
+![scatter_plot_correlation](https://github.com/ilhamMalik51/DicodingAppliedML/blob/e40a9e0b0e368336bcc92e43ab5e40b103cdab74/Proyek-Pertama/assets/scatter_plot_correlation.png)
+
+Berdasarkan gambar di atas dapat dibuktikan bahwa **date_time_hour** memiliki korelasi linear yang menengah (dengan nilai koefisien sekitar 0.3). Bahkan jika diperhatikan lebih dalam lagi, pada atribut tersebut terlihat memiliki hubungan non-linear terhadap atribut target **traffic_volume**. Selain itu karena fitur **temp** memiliki korelasi linear yang lemah (nilai korelasi linear 0.1). Namun, jika diperhatikan lebih seksama terdapat sebuah trend positif pada atribut tersebut. 
+
+Beberapa atribut tidak dimasukan ke dalam visualisasi tersebut adalah salah satunya disebabkan oleh nilai korelasi linear yang sangat kecil mendekati 0. Jika divisualisasikan maka atribut-atribut tersebut akan membentuk segi empat pada diagram scatter plot.
+
+#### Data Kategorikal
+Pada bagian ini akan menganalisis pengaruh setiap kategori terhadap rata-rata nilai **traffic_volume**. Pada bagian ini beberapa tipe data kategorikal akan dipisahkan agar visualisasi data terlihat lebih jelas.
+
+```
+categorical_features = ["holiday", "weather_main", "weather_desc"]
+```
+
+#### Fitur Holiday
+```
+col = categorical_features[0]
+
+sns.catplot(x=col, y="traffic_volume", kind="bar",
+            dodge=False, height=4, aspect=3,
+            data=df, palette="Set3", legend=True)
+plt.title("Rata-rata Volume Traffic terhadap - {}".format(col))
+```
+
+![visualisasi_data_holiday](https://github.com/ilhamMalik51/DicodingAppliedML/blob/489b4ad2c665e5445483f476d4989d1d7ed85715/Proyek-Pertama/assets/target_bar_chart_holiday.png)
+
+Berdasarkan visualisasi di atas dapat diambil kesimpulan bahwa, hari libur mempengaruhi **traffic_volume**. Hal ini ditunjukan dengan tingginya **traffic_volume** pada kategori "None" atau berarti bukan hari libur. Selain itu, nilai tertinggi kedua yang mempengaruhi **traffic_volume** adalah hari libur tahun baru "New Year Day".
+
+#### Fitur Weather Main
+```
+col = categorical_features[1]
+
+sns.catplot(x="traffic_volume", y=col, kind="bar",
+            dodge=False, height=6, aspect=3,
+            data=df, palette="Set3", legend=True)
+plt.title("Rata-rata Volume Traffic terhadap - {}".format(col))
+```
+
+![visualisasi_data_weather_main](https://github.com/ilhamMalik51/DicodingAppliedML/blob/489b4ad2c665e5445483f476d4989d1d7ed85715/Proyek-Pertama/assets/target_bar_chart_weather_main.png)
+
+Berdasarkan visualisasi di atas dapat diambil beberapa kesimpulan sebagai berikut:
+1. Pada kategori _clouds_ dan _haze_ menimbulkan rata-rata **traffic volume** lebih dari 3500
+2. Pada kategori _squall_ memiliki rata-rata **traffic_volume** yang paling rendah yaitu kurang dari 2000
+3. Pada kategori _mist_, _thunderstorm_ dan _fog_ memiliki rata-rata **traffic_volume** di rentang 2500 hingga 3000
+4. Pada kategori _snow_, _rain_, dan _drizzle_ memiliki rata-rata **traffic_volume** di rentang 3000 dan 3500
+
+Kesimpulan yang dapat diambil dari pernyataan di atas adalah kategori-kategori tersebut cukup mempengaruhi nilai target dengan selisih setiap target cukup besar yaitu dengan **traffic_volume** bernilai 500.
+
+#### Fitur Weather Description
+```
+col = categorical_features[2]
+
+sns.catplot(x="traffic_volume", y=col, kind="bar",
+            dodge=False, height=10, aspect=3,
+            data=df, palette="Set3", legend=True)
+plt.title("Rata-rata Volume Traffic terhadap - {}".format(col))
+```
+
+![visualisasi_data_weather_desc](https://github.com/ilhamMalik51/DicodingAppliedML/blob/489b4ad2c665e5445483f476d4989d1d7ed85715/Proyek-Pertama/assets/target_bar_chart_weather_desc.png)
+
+Berdasarkan visualisasi di atas kesimpulan yang diambil hampir sama seperti visualisas yang sebelumnya. Hal ini dikarenakan karena atribut ini merupakan deskripsi lanjutan dari atribut **weather_main**. Pada atribut ini kategori yang ada lebih variatif dibandingkan dengan atribut **weather_main**.
+1. Jika diperhatikan, kategori yang menyebabkan **traffic_volume** lebih besar dari nilai 4000 adalah _sleet_, _light shower snow_, _shower snow_, _freezing rain_, dan _proximity snow rain_.
+2. Selain itu, kategori _squall_ memiliki nilai **traffic_volume** yang mendekati 2000.
+3. Sisanya kategori jatuh pada rentang 2000 hingga 3000 dan 3000 hingga 4000.
+
+Kesimpulan yang diambil adalah bahwa kategori-kategori tersebut cukup berpengaruh untuk memprediksikan nilai **traffic_volume**.
 
 ## Data Preparation
 Pada bagian ini saya akan menjelaskan data preparation
