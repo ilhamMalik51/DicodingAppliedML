@@ -274,13 +274,58 @@ Pada bagian ini saya akan menjelaskan data preparation
 ### Data Preparation: One Hot Encoding
 One Hot Encoding ini merubah data kategorikal menjadi menjadi data numerik. Caranya adalah dengan memberikan nilai 1 pada kategori aslinya dan membiarkan nilai 0 pada kategori lainnya. metode ini digunakan karena data kategori ini tidak memiliki hubungan ordinal dan Machine Learning umumnya tidak memproses tipe data string.
 
+Berikut merupakan contoh kode yang digunakan untuk merubah tipe data kategorikal menjadi tipe data numerik menggunakan `OneHotEncoder()`. Pada bagian ini diperlihatkan hanya salah satu kategori saja karena di akhir bagian ini akan memanfaatkan pipeline untuk bagian _data preparation_ ini.
+
+```
+from sklearn.preprocessing import OneHotEncoder
+
+cat_encoder = OneHotEncoder()
+
+weather_desc_cat = df[["weather_description"]]
+wd_cat_1hot = cat_encoder.fit_transform(weather_desc_cat)
+
+wd_cat_1hot
+```
+
 ### Data Preparation: Split Data
 Pada bagian ini akan menjelaskan split data. Rasio split data yang digunakan adalah 90:10. Hal ini dikarenakan menurut saya data yang digunakan sudah cukup banyak dan ukuran test-set sudah mendekati 5000 instansi. Maka dari itu akan lebih baik jika jumlah data training jadi lebih banyak.
 
+Berikut adalah contoh kode yang digunakan untuk membagi data menjadi _data training_ dan _data testing_. Kode di bawah ini akan menghasilkan _data training_ sebanyak 43372 dan _data testing_ sebanyak 4820.
+
+```
+from sklearn.model_selection import train_test_split
+X = df.drop(["traffic_volume"], axis=1)
+y = df["traffic_volume"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
+```
+
 ### Data Preparation: Feature Scaling
-Pada bagian ini saya menggunakan MinMaxScaler. MinMaxScaler ini merubah data sebagaimana hingga nilai data jatuh pada rentang 0-1. Cara bekerja MinMaxScaler ini adalah seperti yang diekspresikan berikut: <br/>
+Pada bagian ini saya menggunakan `MinMaxScaler()`. `MinMaxScaler()` ini merubah data sebagaimana hingga nilai data jatuh pada rentang 0-1. Cara bekerja `MinMaxScaler()` ini adalah seperti yang diekspresikan berikut: <br/>
+
 `X_hat = (X - min) / (max - min)` <br/>
+
 MinMaxScaler digunakan karena fitur data yang akan diterapkan MinMaxScaler tidak memiliki outlier lalu rentang data yang diubah tergolong tidak terlalu besar, sehingga informasi penting tidak akan hilang.
+
+Berikut merupakan contoh penggunaan `MinMaxScaler()`.
+
+```
+from sklearn.preprocessing import MinMaxScaler
+
+def NormalizeData(X):
+    numerical_feature = ["temp", "date_time_hour"]
+
+    scaler = MinMaxScaler()
+    scaler.fit(X[numerical_feature])
+    X[numerical_feature] = scaler.transform(X.loc[:, numerical_feature])
+    return X
+
+X_train = NormalizeData(X_train)
+X_test = NormalizeData(X_test)
+```
+
+### Data Preparation: Transformation Pipeline
+
 
 ## Modeling
 Pada bagian modeling saya bereksperimen dengan tiga buah model yaitu Linear Regression, Decision Tree Regressor, dan Random Forest Regressor.
