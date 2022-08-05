@@ -78,8 +78,54 @@ Berdasarkan gambar di atas dapat dilihat ringkasan singkat terkait atribut-atrib
 1. Nilai minimum dari atribut **temp** adalah 0, kita ketahui sebelumnya bahwa atribut temperatur tersebut berada pada skala kelvin dimana nilai 0 derajat kelvin (absolut zero) merupakan hal yang tidak mungkin terjadi selama pengamatan jalan perkotaan. Maka dari itu, baris data yang memiliki nilai atribut **temp** 0 derajat akan di-_drop_.
 2. Nilai kedua atribut **rain_1h** dan **snow_1h** pada kuartil pertama (_percentile_ 25%), kuartil kedua (_percentile_ 50%), dan kuartil ketiga (_percentile_ 75%) memiliki nilai yang sama yaitu 0. Hal ini berarti bahwa nilai data yang ada di atribut tersebut hampir seluruhnya bernilai 0 atau dengan kata lain nilai bukan 0 pada atribut tersebut jumlahnya sangat sedikit. Oleh karena itu, kedua fitur ini memiliki kemungkinan yang besar untuk tidak digunakan saat pelatihan model Machine Learning.
 
-#### Exploratory Data Analysis: Missing Data
-Pada bagian ini saya menghilangkan beberapa data pada dataset. Alasan data ini dihapus adalah karena data yang mengandung _missing value_ masih sedikit. Data ini ditemukan melalui metode `describe()` yang dimana terdapat instansi yang memiliki temperatur suhu sebesar 0 kelvin. Hal ini tidak memungkinkan karena 0 kelvin itu sama saja dengan _absolute zero_ tidak mungkin diperoleh pada sistem yang besar. Maka dari itu saya menyelidiki nilai terendah selain 0 Kelvin, dan ditemukan nilai 243 Kelvin. Maka instansi data yang memiliki nilai temp lebih kecil dari 243 Kelvin dihapuskan.
+Setelah memeriksa data yang memiliki tipe data numerik, saatnya memeriksa tipe data bukan numerik. Seperti yang telah diasumsikan sebelumnya, terdapat 3 tipe data kategorikal. Untuk memeriksa data tersebut dapat menggunakan kode berikut.
+
+```
+# df["holiday"].value_counts()
+df["weather_main"].value_counts()
+# df["weather_description"].value_counts()
+```
+
+![df_kategorikal data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/5bfa87efe3138b9783397db91d396129edbdb690/Proyek-Pertama/assets/df_kategorikal_data_overview.JPG)
+
+Hasil dari kode tersebut merupakan salah satu contoh keluaran data kategorikal. Jadi dapat dipastikan bahwa ketiga data tersebut merupakan data kategorikal dimana atribut **holiday** memiliki 11 kategori, atribut **weather_main** memiliki 11 kategori, dan **weather_description** memiliki 38 kategori.
+
+#### Exploratory Data Analysis: Data Cleaning
+Berdasarkan temuan pada bagian sebelumnya bahwa terdapat baris data dimana nilai atribut **temp** adalah 0. Seperti yang telah disinggung pada bagian tersebut, suhu 0 derajat kelvin tidak mungkin terjadi ketika observasi dataset tersebut. Maka dari itu jika diperiksa menggunakan kode di bawah ini maka akan terlihat baris data yang memiliki nilai atribut **temp** 0 derajat Kelvin.
+
+```
+df[df["temp"] < 243]
+```
+![df_screenshot_below_243](https://github.com/ilhamMalik51/DicodingAppliedML/blob/0e02b42be2ba4fdf27201666786ab22482a37be3/Proyek-Pertama/assets/df_below_243.JPG)
+
+Jika diperhatikan dari keluaran kode tersebut, terdapat 10 baris data yang memiliki nilai atribut **temp** bernilai 0 derajat Kelvin. Baris data ini tergolong _incorrect data_ dan data ini akan sedikit memengaruhi analisis dan prediksi model nantinya. Oleh karena itu, data ini dapat dihapus. Penghapusan data ini tidak akan terlalu memengaruhi dataset karena perbandingan jumlah _incorrect data_ dengan jumlah data keseluruhan yang kecil.
+
+Terdapat beberapa cara untuk menghapus data tersebut, pada kasus ini saya mem-_filter_ data dengan menggunakan kode di bawah ini. Setelah itu, data tersebut dapat diperiksa menggunakan method `describe()` seperti yang telah diperlihatkan pada bagian sebelumnya. Dari tabel yang dihasilkan oleh method tersebut, akan terlihat nilai minimum atribut **temp** yang sebelumnya adalah 0 akan berubah menjadi 244.2 derajat Kelvin.
+
+```
+## drop temperature yang hanya bernilai 0 kelvin
+df = df[df["temp"] > 244]
+df.describe()
+```
+
+![df_describe_after_dropped_row_data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/0e02b42be2ba4fdf27201666786ab22482a37be3/Proyek-Pertama/assets/df_dropped_zero_kelvin_data.JPG)
+
+#### Exploratory Data Analysis: Feature Engineering
+Sebelum dapat menganalisis lebih lanjut dengan visualisasi data, terdapat satu atribut yang perlu dirubah. Atribut **date_time** yang sekarang kurang memberikan _insight_ yang diperlukan. Oleh karena itu, nilai atribut tersebut dapat dilakukan _feature engineering_ untuk memisahkan setiap nilai yang ada pada data tersebut. Nilai-nilai yang akan saya ambil adalah tahun, bulan, minggu, hari dan jam. Dengan memisahkan nilai-nilai tersebut ditemukan pola/_insight_ lain saat visualisasi data nantinya.
+
+Berikut merupakan cara untuk mengambil nilai-nilai tersebut. Pertama, karena tipe data yang ditampilkan masih `object` maka perlu terlebih dahulu dirubah menjadi format `datetime64`. Setelah itu, setiap nilai data dapat diambil nilainya dan disimpan pada kolom atribut baru.
+
+```
+df["date_time"] = pd.to_datetime(df["date_time"],
+                                 format='%Y-%m-%d %H:%M:%S',
+                                 errors='coerce')
+
+df["date_time_year"] = df["date_time"].dt.year
+df["date_time_month"] = df["date_time"].dt.month
+df["date_time_day"] = df["date_time"].dt.day
+df["date_time_hour"] = df["date_time"].dt.hour
+```
+Setelah kode tersebut dijalankan maka kolom dataset akan bertambah sebanya 4 kolom ke sebelah kanan. Perubahan ini dapat dilihat menggunakan method `head()` atau method `info()` seperti yang telah dijelaskan pada bagian sebelumnya.
 
 #### Exploratory Data Analysis: Univariate Data
 - Untuk **data numerik** dilakukan teknik visualisasi data menggunakan histogram. Histogram ini untuk melihat ketersebaran data ditunjukan dari bentuk graph yang diberikan
