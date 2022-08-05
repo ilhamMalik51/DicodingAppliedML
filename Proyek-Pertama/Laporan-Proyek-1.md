@@ -82,8 +82,8 @@ Setelah memeriksa data yang memiliki tipe data numerik, saatnya memeriksa tipe d
 
 ```
 # df["holiday"].value_counts()
-df["weather_main"].value_counts()
-# df["weather_description"].value_counts()
+# df["weather_main"].value_counts()
+df["weather_description"].value_counts()
 ```
 
 ![df_kategorikal data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/5bfa87efe3138b9783397db91d396129edbdb690/Proyek-Pertama/assets/df_kategorikal_data_overview.JPG)
@@ -104,11 +104,19 @@ Terdapat beberapa cara untuk menghapus data tersebut, pada kasus ini saya mem-_f
 
 ```
 ## drop temperature yang hanya bernilai 0 kelvin
-df = df[df["temp"] > 244]
+df.drop(df[df["temp"] < 243].index, inplace=True)
 df.describe()
 ```
 
-![df_describe_after_dropped_row_data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/0e02b42be2ba4fdf27201666786ab22482a37be3/Proyek-Pertama/assets/df_dropped_zero_kelvin_data.JPG)
+![df_describe_after_dropped_row_data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/2d8b9570aff6c5d17e9fbd1fd8edcc2f622fa8e1/Proyek-Pertama/assets/df_dropped_zero_kelvin_data.JPG)
+
+Selain itu pada fitur kategori **weather_description** terdapat baris data yang hanya memiliki 1 kategori. Hal ini akan bermasalah, karena saat splitting data nanti akan menggunakan `StratifiedShuffleSplit()` dimana baik _data training_ dan juga _data testing_ akan memiliki presentasi jumlah data kategorikal yang sama. Oleh karena itu, data dengan nilai kategori tersebut akan di-_drop_.
+
+Berikut kode untuk melakukan drop pada baris data tersebut.
+
+```
+df.drop(df[df["weather_description"] == "shower snow"].index, inplace=True)
+```
 
 ### Exploratory Data Analysis: Feature Engineering
 Sebelum dapat menganalisis lebih lanjut dengan visualisasi data, terdapat satu atribut yang perlu dirubah. Atribut **date_time** yang sekarang kurang memberikan _insight_ yang diperlukan. Oleh karena itu, nilai atribut tersebut dapat dilakukan _feature engineering_ untuk memisahkan setiap nilai yang ada pada data tersebut. Nilai-nilai yang akan saya ambil adalah tahun, bulan, minggu, hari dan jam. Dengan memisahkan nilai-nilai tersebut ditemukan pola/_insight_ lain saat visualisasi data nantinya.
@@ -271,6 +279,31 @@ Kesimpulan yang diambil adalah bahwa kategori-kategori tersebut cukup berpengaru
 ## Data Preparation
 Pada bagian ini saya akan menjelaskan data preparation
 
+### Data Preparation: Split Data
+Pada bagian ini akan menjelaskan split data. Pada kasus ini, saya menggunakan `StratifiedShuffleSplit()`. _Object_ ini akan membagi secara strata untuk fitur kategorikal **weather_description**. Rasio split data yang digunakan adalah 90:10. Hal ini dikarenakan menurut saya data yang digunakan sudah cukup banyak dan ukuran test-set sudah mendekati 5000 instansi. Maka dari itu akan lebih baik jika jumlah data training jadi lebih banyak.
+
+Berikut adalah contoh kode yang digunakan untuk membagi data menjadi _data training_ dan _data testing_. Kode di bawah ini akan menghasilkan _data training_ sebanyak 43372 dan _data testing_ sebanyak 4820.
+
+```
+from sklearn.model_selection import StratifiedShuffleSplit
+
+df_reset_index = df.reset_index()
+
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.1, random_state=42)
+for train_index, test_index in split.split(df_reset_index, df_reset_index["weather_description"]):
+    strat_train_set = df_reset_index.loc[train_index]
+    strat_test_set = df_reset_index.loc[test_index]
+
+feature_columns = ["holiday", "temp", "weather_main", "weather_description", "date_time_hour"]
+label_columns = ["traffic_volume"]
+
+X_train = strat_train_set[feature_columns]
+y_train = strat_train_set[label_columns]
+
+X_test = strat_test_set[feature_columns]
+y_test = strat_test_set[label_columns]
+```
+
 ### Data Preparation: One Hot Encoding
 One Hot Encoding ini merubah data kategorikal menjadi menjadi data numerik. Caranya adalah dengan memberikan nilai 1 pada kategori aslinya dan membiarkan nilai 0 pada kategori lainnya. metode ini digunakan karena data kategori ini tidak memiliki hubungan ordinal dan Machine Learning umumnya tidak memproses tipe data string.
 
@@ -287,19 +320,6 @@ wd_cat_1hot = cat_encoder.fit_transform(weather_desc_cat)
 wd_cat_1hot
 ```
 
-### Data Preparation: Split Data
-Pada bagian ini akan menjelaskan split data. Rasio split data yang digunakan adalah 90:10. Hal ini dikarenakan menurut saya data yang digunakan sudah cukup banyak dan ukuran test-set sudah mendekati 5000 instansi. Maka dari itu akan lebih baik jika jumlah data training jadi lebih banyak.
-
-Berikut adalah contoh kode yang digunakan untuk membagi data menjadi _data training_ dan _data testing_. Kode di bawah ini akan menghasilkan _data training_ sebanyak 43372 dan _data testing_ sebanyak 4820.
-
-```
-from sklearn.model_selection import train_test_split
-X = df.drop(["traffic_volume"], axis=1)
-y = df["traffic_volume"]
-
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
-```
-
 ### Data Preparation: Feature Scaling
 Pada bagian ini saya menggunakan `MinMaxScaler()`. `MinMaxScaler()` ini merubah data sebagaimana hingga nilai data jatuh pada rentang 0-1. Cara bekerja `MinMaxScaler()` ini adalah seperti yang diekspresikan berikut: <br/>
 
@@ -311,21 +331,36 @@ Berikut merupakan contoh penggunaan `MinMaxScaler()`.
 
 ```
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.pipeline import Pipeline
 
-def NormalizeData(X):
-    numerical_feature = ["temp", "date_time_hour"]
+num_columns = ["temp", "date_time_hour"]
+numerical_pipeline = Pipeline([
+    ("minmax_scaler", MinMaxScaler())
+])
 
-    scaler = MinMaxScaler()
-    scaler.fit(X[numerical_feature])
-    X[numerical_feature] = scaler.transform(X.loc[:, numerical_feature])
-    return X
-
-X_train = NormalizeData(X_train)
-X_test = NormalizeData(X_test)
+df_num = numerical_pipeline.fit_transform(X_train[num_columns])
+df_num.shape
 ```
 
 ### Data Preparation: Transformation Pipeline
+Pada bagian ini adalah pengaplikasian dari feature scaling dan perubahan kategorikal data memanfaatkan pipeline yang disediakan oleh library Sckit Learn. Hal ini dilakukan supaya lebih mudah mengaplikasikan transformasi terhadat _test data_. Dengan adanya pipeline ini juga dapat memudahkan transformasi fitur data yang akan diproses untuk model yang sudah di-_deploy_ pada cloud.
 
+Berikut merupakan contoh aplikasi kode pipeline.
+
+```
+from sklearn.compose import ColumnTransformer
+
+num_columns = ["temp", "date_time_hour"]
+cat_columns = ["holiday", "weather_main", "weather_description"]
+
+transform_pipeline = ColumnTransformer([
+    ("numeric", numerical_pipeline, num_columns),
+    ("categorical", OneHotEncoder(), cat_columns)
+])
+
+X_train_prepared = transform_pipeline.fit_transform(X_train)
+X_test_prepared = transform_pipeline.fit_transform(X_test)
+```
 
 ## Modeling
 Pada bagian modeling saya bereksperimen dengan tiga buah model yaitu Linear Regression, Decision Tree Regressor, dan Random Forest Regressor.
