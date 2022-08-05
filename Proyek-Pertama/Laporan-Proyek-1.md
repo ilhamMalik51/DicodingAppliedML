@@ -294,7 +294,7 @@ for train_index, test_index in split.split(df_reset_index, df_reset_index["weath
     strat_train_set = df_reset_index.loc[train_index]
     strat_test_set = df_reset_index.loc[test_index]
 
-feature_columns = ["holiday", "temp", "weather_main", "weather_description", "date_time_hour"]
+feature_columns = ["temp", "weather_main", "date_time_hour"]
 label_columns = ["traffic_volume"]
 
 X_train = strat_train_set[feature_columns]
@@ -351,7 +351,7 @@ Berikut merupakan contoh aplikasi kode pipeline.
 from sklearn.compose import ColumnTransformer
 
 num_columns = ["temp", "date_time_hour"]
-cat_columns = ["holiday", "weather_main", "weather_description"]
+cat_columns = ["weather_main"]
 
 transform_pipeline = ColumnTransformer([
     ("numeric", numerical_pipeline, num_columns),
@@ -359,40 +359,76 @@ transform_pipeline = ColumnTransformer([
 ])
 
 X_train_prepared = transform_pipeline.fit_transform(X_train)
+y_train = np.reshape(y_train.to_numpy(), y_train.shape[0])
 X_test_prepared = transform_pipeline.fit_transform(X_test)
+y_test = np.reshape(y_test.to_numpy(), y_test.shape[0])
 ```
 
 ## Modeling
-Pada bagian modeling saya bereksperimen dengan tiga buah model yaitu Linear Regression, Decision Tree Regressor, dan Random Forest Regressor.
+Pada bagian modeling saya bereksperimen dengan tiga buah model yaitu Linear Regression, Decision Tree Regressor, dan Random Forest Regressor. Sebelum dilanjutkan pada tahap _training_ dan evaluasi model, alangkah baik untuk membuat sebuah fungsi untuk kedua hal tersebut. Fungsi ini akan menerima masukan berupa model, _training data_ dan _test data_, lalu akan menghasilkan nilai metrik RMSE untuk setiap himpunan data untuk setiap model.
+
+```
+def evaluation(model, X_train, y_train, X_test, y_test):
+    model.fit(X_train, y_train)
+    scores = cross_val_score(model, X_train, y_train,
+                             scoring="neg_root_mean_squared_error",
+                             cv=8)
+    train_rmse = -scores.mean()
+    
+    tv_prediction = model.predict(X_test)
+    test_rmse = np.sqrt(mean_squared_error(y_test, tv_prediction))
+    
+    return train_rmse, test_rmse
+```
 
 ### Linear Regression
-Kelebihan dari linear regression ini merupakan model yang paling sederhana dibandingkan model lain yang digunakan dalam eksperimen ini, selain itu kelebihan lainnya adalah waktu training yang cepat.
+Kelebihan dari Linear Regression ini merupakan model yang paling sederhana dibandingkan model lain yang digunakan dalam eksperimen ini, selain itu kelebihan lainnya adalah waktu training yang cepat.
 Kekurangan dari model ini adalah karena model ini termasuk yang paling sederhana, maka model ini masih mengalami underfitting terhadap dataset.
+
+Berikut adalah cara menggunakan model Linear Regression. Hasil dari _training_ dan evaluasi dari model ini ditampilkan pada gambar berikut.
+
+```
+from sklearn.linear_model import LinearRegression
+
+lin_reg = LinearRegression()
+train_rmse, test_rmse = evaluation(lin_reg, X_train_prepared, y_train, X_test_prepared, y_test)
+```
+
+![lin_reg_eval](https://github.com/ilhamMalik51/DicodingAppliedML/blob/76d94224f788525c2a61cce0c3eb9d6ae775f350/Proyek-Pertama/assets/lin_reg_eval.JPG)
 
 ### Decision Tree Regressor
 Kelebihan dari Decision Tree Regressor adalah model ini dapat mempelajari hubungan non-linear.
 Kekurangan dari Decision Tree Regressor pada kasus ini adalah karena model ini lebih kompleks daripada linear regression, model ini lebih rentan terkena overfitting terhadap dataset.
 
+```
+from sklearn.tree import DecisionTreeRegressor
+
+tree_reg = DecisionTreeRegressor()
+train_rmse, test_rmse = evaluation(tree_reg, X_train_prepared, y_train, X_test_prepared, y_test)
+```
+
+![dt_reg_eval](https://github.com/ilhamMalik51/DicodingAppliedML/blob/76d94224f788525c2a61cce0c3eb9d6ae775f350/Proyek-Pertama/assets/dt_reg_eval.JPG)
+
 ### Random Forest Regressor
 Kelebihan dari Random Forest Regressor adalah karena model ini merupakan Ensemble Machine Learning, maka model ini merupakan yang paling kompleks.
 Kekurangan dari Random Forest Regressor adalah model ini memiliki waktu training yang cukup lama dibanding model yang lain, dan masih terdapat overfitting terhadap dataset.
 
-Berdasarkan hasil eksperimen, model terbaik yang dijadikan sebagai solusi adalah **Random Forest Regressor.**
+```
+from sklearn.ensemble import RandomForestRegressor
+
+forest_reg = RandomForestRegressor()
+train_rmse, test_rmse = evaluation(forest_reg, X_train_prepared, y_train, X_test_prepared, y_test)
+```
+
+![rf_reg_eval](https://github.com/ilhamMalik51/DicodingAppliedML/blob/76d94224f788525c2a61cce0c3eb9d6ae775f350/Proyek-Pertama/assets/rf_reg_eval.JPG)
 
 ## Evaluation
-Pada proyek ini metrik evaluasi yang digunakan adalah _Root Mean Squared Error_. Alasan menggunakan RMSE adalah karena metrik ini memiliki presisi yang cukup tinggi dan dataset yang digunakan tidak memiliki _outlier_ sehingga dapat menggunakan RMSE sebagai metrik evaluasi.
+Pada bagian ini akan membahas metrik yang digunakan dan hasil _training_ serta evaluasi dari setiap model.
 
-| Models           | Train_rmse    | Test_rmse   |
-| -------------    |:-------------:| -----------:|
-| LinearRegression | 1837.979158	 | 1847.533254 |
-| DTRegressor      | 225.672612    | 1307.898144 |
-| RFRegressor      | 419.347272    | 1067.031678 |
+### Formula RMSE
 
-Berdasarkan hasil di atas dapat diambil kesimpulan bahwa model yang terbaik untuk menjadi solusi adalah **Random Forest Regressor.**
-Hal ini dikarenakan RMSE menghitung jarak prediksi terhadap nilai asli. Selain itu, Random Forest Regressor mengalami overfitting namun tidak
-lebih parah dibandingkan **Decision Tree Regressor.**
+Pada proyek ini metrik evaluasi yang digunakan adalah _Root Mean Squared Error_. Alasan menggunakan RMSE adalah karena metrik ini memiliki presisi yang cukup tinggi dan dataset yang digunakan tidak memiliki _outlier_ sehingga dapat menggunakan RMSE sebagai metrik evaluasi. Rumus RMSE dapat diekspresikan sebagai berikut.
 
-### Formula RMSE dapat dilihat pada gambar berikut
 ![Formula RMSE](https://miro.medium.com/max/966/1*lqDsPkfXPGen32Uem1PTNg.png)
 
 Keterangan:
@@ -401,10 +437,30 @@ Keterangan:
 - y_hat : merupakan prediksi model
 - y     : merupakan nilai target
 
+### Evaluasi Model
+
+Berikut adalah tabel akhir hasil dari _training_ dan evaluasi dari setiap model.
+
+| Models           | Train_rmse    | Test_rmse   |
+| -------------    |:-------------:| -----------:|
+| LinearRegression | 1839.376566	 | 1831.351756 |
+| DTRegressor      | 1239.391596   | 1256.800549 |
+| RFRegressor      | 1013.40798    | 1026.672234 |
+
+Setelah _training_ dan evaluasi selesai, maka hasil dari setiap model divisualisasikan sebagai berikut.
+
+![bar_chart_modelling](https://github.com/ilhamMalik51/DicodingAppliedML/blob/1abdea6b0d07668e604904332699cc80e989ac7e/Proyek-Pertama/assets/bar_chart_modelling.png)
+
+Berdasarkan hasil di atas dapat diambil kesimpulan bahwa model yang terbaik untuk menjadi solusi adalah **Random Forest Regressor.** Setelah dilakukan berbagai eksperimen, terlihat bahwa untuk memperbaiki nilai metrik tersebut adalah dengan mencoba mengambil data kembali dengan atribut lain. Hal ini dikarenakan dengan atribut yang ada, kebanyakan tidak memiliki korelasi linear terhadap nilai target, sehingga model Machine Learning akan kesulitan untum mencari pola dari atribut-atribut tersebut.
+
+Selain itu, pendekatan lain pun dapat dicoba, seperti menggunakan teknik pendekatan permasalahan _time-series_ mungkin akan menghasilkan yang berbeda bahkan lebih baik.
+
 ## Kesimpulan
 Untuk menjawab permasalahan pada bagian Problem Statement, dapat diurutkan sebagai berikut:
 1. Penyebab Tingginya Traffic Volume dipengaruhi oleh **pukul waktu** dan **temperatur** saat itu.
 2. Jika seseorang mengetahui keadaan dan temperatur saat itu, dengan memanfaatkan model Machine Learning, orang tersebut dapat memprediksikan traffic volume pada saat itu juga.
+3. Jika ingin meningkatkan unjuk kerja dari model Machine Learning maka perlu adanya perubahan atribut dataset atau pengambilan ulang dataset.
+4. Selain itu, terdapat pendekatan lain yang dapat digunakan untuk memprediksikan **traffic_volume** yaitu pendekatan _time-series_.
 
 ## Referensi
 [1].Bharadwaj, Shashank, Sudheer Ballare, and Munish K. Chandel. "Impact of congestion on greenhouse gas emissions for road transport in Mumbai metropolitan region." Transportation Research Procedia 25 (2017): 3538-3551.
