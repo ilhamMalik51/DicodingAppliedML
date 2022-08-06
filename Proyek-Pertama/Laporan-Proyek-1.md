@@ -3,28 +3,27 @@
 ## Domain Proyek
 Traffic Volume, Predictive Analysis, Sosial 
 
-Perhitungan lalu lintas adalah perhitungan terhadap baik lalu lintas kendaraan atau pejalan kaki, dimana pada umumnya dilaksanakan sepanjang jalan tertentu atau persimpangan. Perhitungan lalu lintas menyediakan data yang dapat digunakan untuk menghitung perhitungan lalu lintas harian rata-rata yang dimana menjadi indikator umum sebagai representasi Traffic Volume. Tingginya Traffic Volume dapat menyebabkan berbagai masalah, salah satunya adalah kesempatan dan waktu yang terbuang percuma serta peningkatan stress terhadap kehidupan manusia[1],[2]. Jika dibiarkan, tidak hanya mempengaruhi produktivitas individu, bahkan dapat mempengaruhi persaingan sebuah negara[3].
+Perhitungan lalu lintas adalah perhitungan baik lalu lintas kendaraan atau pejalan kaki, dimana perhitungan ini dilaksanakan sepanjang jalan atau persimpangan tertentu. Perhitungan lalu lintas menyediakan data yang dapat digunakan untuk menghitung lalu lintas harian rata-rata yang dimana menjadi indikator umum sebagai representasi Traffic Volume. Tingginya Traffic Volume dapat menyebabkan berbagai masalah, salah satunya adalah kesempatan dan waktu yang terbuang percuma serta peningkatan stress terhadap kehidupan manusia[1],[2]. Jika dibiarkan, tidak hanya masalah ini dapat mempengaruhi produktivitas individu, bahkan dapat mempengaruhi persaingan kompetitif sebuah negara[3].
 
-Permasalahan ini perlu diselesaikan dengan tujuan agar meningkatkan kualitas hidup manusia dan meningkatkan efisiensi waktu yang digunakan selama perjalanan. Salah satu solusi adalah dengan memprediksikan Traffic Volume pada keadaan tertentu seperti waktu, dengan begitu seseorang dapat menghindari waktu tertentu untuk melewati jalan tersebut atau mencari alternatif jalan lain.
+Permasalahan ini perlu diselesaikan dengan tujuan agar meningkatkan kualitas hidup manusia dan meningkatkan efisiensi waktu yang digunakan selama perjalanan. Hal ini akan berdampak bertambahnya produktivitas suatu wilayah. Jika setiap wilayah dapat mengatasi masalah ini, maka bukan tidak mungkin akan mempengaruhi produktivitas negara secara keseluruhan. Salah satu solusinya adalah dengan memprediksikan Traffic Volume pada keadaan tertentu seperti waktu, dengan begitu seseorang dapat menghindari waktu tertentu untuk melewati jalan tersebut atau mencari alternatif jalan lain. Selain itu, dapat memahami faktor-faktor yang mempengaruhi tingginya traffic volume akan membuat setiap individu dapat mengambil keputusan yang tepat.
 
 ## Business Understanding
 
 ### Problem Statements
 
 Menjelaskan pernyataan masalah latar belakang:
-- Seorang individu tidak mengetahui pada keadaan apa saja yang menyebabkan Traffic Volume tinggi
-- Seorang individu tidak dapat memprediksi apakah pada saat keadaan tertentu Traffic Volume sedang tinggi 
+- Seorang individu tidak mengetahui pada keadaan apa saja yang menyebabkan Traffic Volume yang tinggi
+- Seorang individu tidak dapat memprediksi apakah pada saat keadaan tertentu Traffic Volume sedang tinggi atau rendah
 
 ### Goals
 
 Menjelaskan tujuan dari pernyataan masalah:
-- Seseorang dapat mengetahui keadaan-keadaan yang menyebabkan Traffic Volume tinggi
+- Seseorang dapat mengetahui keadaan-keadaan yang memiliki korelasi terhadap Traffic Volume yang tinggi
 - Seseorang dapat memprediksikan keadaan Traffic Volume saat ini
 
 ### Solution statements
 - Memberikan insight keadaan-keadaan yang berkorelasi terhadap Traffic Volume melalui visualisasi data.
-- Mengajukan algoritma Linear Regresion, Decision Tree Regressor dan Random Forest Regressor untuk memprediksi Traffic Volume. 
-- Metrik yang dijadikan evaluasi model adalah Root Mean Squared Error (RMSE).
+- Mengajukan algoritma Linear Regression, Decision Tree Regressor dan Random Forest Regressor untuk memprediksi Traffic Volume dimana metrik yang dijadikan evaluasi model adalah Root Mean Squared Error (RMSE).
 
 ## Data Understanding
 Dataset Metro Interstate Traffic Volume merupakan dataset yang mengukur volume lalu lintas jalan Westbound Interstate-94, serta mengukur
@@ -54,7 +53,7 @@ df.head(10)
 ```
 ![df_head_screenshot](https://github.com/ilhamMalik51/DicodingAppliedML/blob/b6f010b50202bf8bce08dbd8993f2d58fdd0ab22/Proyek-Pertama/assets/df_head_function_ss.JPG)
 
-Berdasarkan hasil keluaran dari method `head()` tersebut bahwa dataset tersebut memiliki 9 atribut. Dari ke-9 atribut tersebut, terdapat 3 atribut yang sepertinya merupakan tipe data string. Namun nilai dari tipe data string tersebut terdapat nilai yang berulang, jika dilihat baris pertama hingga baris kelima memiliki nilai "clouds", dapat diasumsikan bahwa tipe data dari atribut tersebut merupakan kategorikal. Selain itu terdapat attribut date_time dengan tipe data date-time. Dalam bentuknya yang sekarang nilai pada atribut tersebut belum bisa dianalisis lebih lanjut, maka dari itu atribut ini perlu diproses lebih lanjut dengan tujuan agar ditemukan pola lain selain dari kesembilan fitur-fitur yang sudah ada. 
+Berdasarkan hasil keluaran dari method `head()` tersebut bahwa dataset tersebut memiliki 9 atribut. Dari ke-9 atribut tersebut, terdapat 3 atribut yang sepertinya merupakan tipe data string. Namun nilai dari tipe data string tersebut terdapat nilai yang berulang, jika dilihat baris pertama hingga baris kelima memiliki nilai "clouds", dapat diasumsikan bahwa tipe data dari atribut tersebut merupakan kategorikal. Selain itu terdapat atribut date_time dengan tipe data date-time. Dalam bentuknya yang sekarang nilai pada atribut tersebut belum bisa dianalisis lebih lanjut, maka dari itu atribut ini perlu diproses lebih lanjut dengan tujuan agar ditemukan pola lain selain dari kesembilan fitur-fitur yang sudah ada. 
 
 Selain itu terdapat method yang dapat melihat deskripsi dataset, khususnya akan menampilkan seluruh jumlah baris dataset, tipe setiap atribut dataset, dan jumlah nilai _nonnull_. Method tersebut adalah method `info()` yang terdapat pada DataFrame object.
 
@@ -75,20 +74,20 @@ df.describe()
 
 Berdasarkan gambar di atas dapat dilihat ringkasan singkat terkait atribut-atribut numerik yang ada pada dataset. Baris _count_, _mean_, _min_, dan _max_ merupakan baris yang menunjukan jumlah baris, rata-rata, nilai minimum, dan nilai maksimum. Terdapat beberapa hal yang menjadi perhatian dari tabel tersebut:
 
-1. Nilai minimum dari atribut **temp** adalah 0, kita ketahui sebelumnya bahwa atribut temperatur tersebut berada pada skala kelvin dimana nilai 0 derajat kelvin (absolut zero) merupakan hal yang tidak mungkin terjadi selama pengamatan jalan perkotaan. Maka dari itu, baris data yang memiliki nilai atribut **temp** 0 derajat akan di-_drop_.
+1. Nilai minimum dari atribut **temp** adalah 0, kita ketahui sebelumnya bahwa atribut temperatur tersebut berada pada skala kelvin dimana nilai 0 derajat kelvin (absolute zero) merupakan hal yang tidak mungkin terjadi selama pengamatan jalan perkotaan. Maka dari itu, baris data yang memiliki nilai atribut **temp** 0 derajat akan di-_drop_.
 2. Nilai kedua atribut **rain_1h** dan **snow_1h** pada kuartil pertama (_percentile_ 25%), kuartil kedua (_percentile_ 50%), dan kuartil ketiga (_percentile_ 75%) memiliki nilai yang sama yaitu 0. Hal ini berarti bahwa nilai data yang ada di atribut tersebut hampir seluruhnya bernilai 0 atau dengan kata lain nilai bukan 0 pada atribut tersebut jumlahnya sangat sedikit. Oleh karena itu, kedua fitur ini memiliki kemungkinan yang besar untuk tidak digunakan saat pelatihan model Machine Learning.
 
 Setelah memeriksa data yang memiliki tipe data numerik, saatnya memeriksa tipe data bukan numerik. Seperti yang telah diasumsikan sebelumnya, terdapat 3 tipe data kategorikal. Untuk memeriksa data tersebut dapat menggunakan kode berikut.
 
 ```
 # df["holiday"].value_counts()
-# df["weather_main"].value_counts()
-df["weather_description"].value_counts()
+df["weather_main"].value_counts()
+# df["weather_description"].value_counts()
 ```
 
 ![df_kategorikal data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/5bfa87efe3138b9783397db91d396129edbdb690/Proyek-Pertama/assets/df_kategorikal_data_overview.JPG)
 
-Hasil dari kode tersebut merupakan salah satu contoh keluaran data kategorikal. Jadi dapat dipastikan bahwa ketiga data tersebut merupakan data kategorikal dimana atribut **holiday** memiliki 11 kategori, atribut **weather_main** memiliki 11 kategori, dan **weather_description** memiliki 38 kategori.
+Hasil dari kode tersebut merupakan salah satu contoh keluaran data kategorikal. Jadi dapat dipastikan bahwa ketiga data tersebut merupakan data kategorikal dimana atribut **holiday** memiliki 12 kategori, atribut **weather_main** memiliki 11 kategori, dan **weather_description** memiliki 38 kategori.
 
 ### Exploratory Data Analysis: Data Cleaning
 Berdasarkan temuan pada bagian sebelumnya bahwa terdapat baris data dimana nilai atribut **temp** adalah 0. Seperti yang telah disinggung pada bagian tersebut, suhu 0 derajat kelvin tidak mungkin terjadi ketika observasi dataset tersebut. Maka dari itu jika diperiksa menggunakan kode di bawah ini maka akan terlihat baris data yang memiliki nilai atribut **temp** 0 derajat Kelvin.
@@ -110,14 +109,6 @@ df.describe()
 
 ![df_describe_after_dropped_row_data](https://github.com/ilhamMalik51/DicodingAppliedML/blob/2d8b9570aff6c5d17e9fbd1fd8edcc2f622fa8e1/Proyek-Pertama/assets/df_dropped_zero_kelvin_data.JPG)
 
-Selain itu pada fitur kategori **weather_description** terdapat baris data yang hanya memiliki 1 kategori. Hal ini akan bermasalah, karena saat splitting data nanti akan menggunakan `StratifiedShuffleSplit()` dimana baik _data training_ dan juga _data testing_ akan memiliki presentasi jumlah data kategorikal yang sama. Oleh karena itu, data dengan nilai kategori tersebut akan di-_drop_.
-
-Berikut kode untuk melakukan drop pada baris data tersebut.
-
-```
-df.drop(df[df["weather_description"] == "shower snow"].index, inplace=True)
-```
-
 ### Exploratory Data Analysis: Feature Engineering
 Sebelum dapat menganalisis lebih lanjut dengan visualisasi data, terdapat satu atribut yang perlu dirubah. Atribut **date_time** yang sekarang kurang memberikan _insight_ yang diperlukan. Oleh karena itu, nilai atribut tersebut dapat dilakukan _feature engineering_ untuk memisahkan setiap nilai yang ada pada data tersebut. Nilai-nilai yang akan saya ambil adalah tahun, bulan, minggu, hari dan jam. Dengan memisahkan nilai-nilai tersebut ditemukan pola/_insight_ lain saat visualisasi data nantinya.
 
@@ -133,7 +124,7 @@ df["date_time_month"] = df["date_time"].dt.month
 df["date_time_day"] = df["date_time"].dt.day
 df["date_time_hour"] = df["date_time"].dt.hour
 ```
-Setelah kode tersebut dijalankan maka kolom dataset akan bertambah sebanya 4 kolom ke sebelah kanan. Perubahan ini dapat dilihat menggunakan method `head()` atau method `info()` seperti yang telah dijelaskan pada bagian sebelumnya.
+Setelah kode tersebut dijalankan maka kolom dataset akan bertambah sebanyak 4 kolom ke sebelah kanan. Perubahan ini dapat dilihat menggunakan method `head()` atau method `info()` seperti yang telah dijelaskan pada bagian sebelumnya.
 
 ### Exploratory Data Analysis: Univariate Data
 #### Data Numerik
@@ -220,7 +211,7 @@ Beberapa atribut tidak dimasukan ke dalam visualisasi tersebut adalah salah satu
 Pada bagian ini akan menganalisis pengaruh setiap kategori terhadap rata-rata nilai **traffic_volume**. Pada bagian ini beberapa tipe data kategorikal akan dipisahkan agar visualisasi data terlihat lebih jelas.
 
 ```
-categorical_features = ["holiday", "weather_main", "weather_desc"]
+categorical_features = ["holiday", "weather_main", "weather_description"]
 ```
 
 #### Fitur Holiday
@@ -235,7 +226,7 @@ plt.title("Rata-rata Volume Traffic terhadap - {}".format(col))
 
 ![visualisasi_data_holiday](https://github.com/ilhamMalik51/DicodingAppliedML/blob/489b4ad2c665e5445483f476d4989d1d7ed85715/Proyek-Pertama/assets/target_bar_chart_holiday.png)
 
-Berdasarkan visualisasi di atas dapat diambil kesimpulan bahwa, hari libur mempengaruhi **traffic_volume**. Hal ini ditunjukan dengan tingginya **traffic_volume** pada kategori "None" atau berarti bukan hari libur. Selain itu, nilai tertinggi kedua yang mempengaruhi **traffic_volume** adalah hari libur tahun baru "New Year Day".
+Berdasarkan visualisasi di atas dapat diambil kesimpulan bahwa, hari libur kurang mempengaruhi **traffic_volume**. Hal ini ditunjukan dengan tingginya **traffic_volume** pada kategori "None" atau berarti bukan hari libur. Lalu jumlah data untuk kategori libur terlampau sangat jauh dibandingkan dengan data libur sehingga kategori ini kurang mempengaruhi fitur target.
 
 #### Fitur Weather Main
 ```
@@ -269,28 +260,29 @@ plt.title("Rata-rata Volume Traffic terhadap - {}".format(col))
 
 ![visualisasi_data_weather_desc](https://github.com/ilhamMalik51/DicodingAppliedML/blob/489b4ad2c665e5445483f476d4989d1d7ed85715/Proyek-Pertama/assets/target_bar_chart_weather_desc.png)
 
-Berdasarkan visualisasi di atas kesimpulan yang diambil hampir sama seperti visualisas yang sebelumnya. Hal ini dikarenakan karena atribut ini merupakan deskripsi lanjutan dari atribut **weather_main**. Pada atribut ini kategori yang ada lebih variatif dibandingkan dengan atribut **weather_main**.
+Berdasarkan visualisasi di atas kesimpulan yang diambil hampir sama seperti visualisasi yang sebelumnya. Hal ini dikarenakan karena atribut ini merupakan deskripsi lanjutan dari atribut **weather_main**. Pada atribut ini kategori yang ada lebih variatif dibandingkan dengan atribut **weather_main**.
 1. Jika diperhatikan, kategori yang menyebabkan **traffic_volume** lebih besar dari nilai 4000 adalah _sleet_, _light shower snow_, _shower snow_, _freezing rain_, dan _proximity snow rain_.
 2. Selain itu, kategori _squall_ memiliki nilai **traffic_volume** yang mendekati 2000.
 3. Sisanya kategori jatuh pada rentang 2000 hingga 3000 dan 3000 hingga 4000.
+4. Kategori pada **weather_description** terlalu bervariatif dan jika dilihat lebih dalam terdapat kategori yang sama namun memiliki penamaan yang sedikit berbeda menyebabkan terlalu banyak kategori yang ada.
 
-Kesimpulan yang diambil adalah bahwa kategori-kategori tersebut cukup berpengaruh untuk memprediksikan nilai **traffic_volume**.
+Kesimpulan yang diambil adalah bahwa kategori-kategori tersebut tidak cukup berpengaruh untuk memprediksikan nilai **traffic_volume**.
 
 ## Data Preparation
 Pada bagian ini saya akan menjelaskan data preparation
 
 ### Data Preparation: Split Data
-Pada bagian ini akan menjelaskan split data. Pada kasus ini, saya menggunakan `StratifiedShuffleSplit()`. _Object_ ini akan membagi secara strata untuk fitur kategorikal **weather_description**. Rasio split data yang digunakan adalah 90:10. Hal ini dikarenakan menurut saya data yang digunakan sudah cukup banyak dan ukuran test-set sudah mendekati 5000 instansi. Maka dari itu akan lebih baik jika jumlah data training jadi lebih banyak.
+Pada bagian ini akan menjelaskan split data. Pada kasus ini, saya menggunakan `StratifiedShuffleSplit()`. _Object_ ini akan membagi secara strata untuk fitur kategorikal **weather_main**. Rasio split data yang digunakan adalah 85:15. Hal ini dikarenakan menurut saya data yang digunakan sudah cukup banyak dan ukuran test-set sudah melebihi 5000 instansi. Maka dari itu akan lebih baik jika jumlah data training jadi lebih banyak.
 
-Berikut adalah contoh kode yang digunakan untuk membagi data menjadi _data training_ dan _data testing_. Kode di bawah ini akan menghasilkan _data training_ sebanyak 43372 dan _data testing_ sebanyak 4820.
+Berikut adalah contoh kode yang digunakan untuk membagi data menjadi _data training_ dan _data testing_. Kode di bawah ini akan menghasilkan _data training_ sebanyak 40964 dan _data testing_ sebanyak 7230.
 
 ```
 from sklearn.model_selection import StratifiedShuffleSplit
 
 df_reset_index = df.reset_index()
 
-split = StratifiedShuffleSplit(n_splits=1, test_size=0.1, random_state=42)
-for train_index, test_index in split.split(df_reset_index, df_reset_index["weather_description"]):
+split = StratifiedShuffleSplit(n_splits=1, test_size=0.15, random_state=42)
+for train_index, test_index in split.split(df_reset_index, df_reset_index["weather_main"]):
     strat_train_set = df_reset_index.loc[train_index]
     strat_test_set = df_reset_index.loc[test_index]
 
@@ -314,7 +306,7 @@ from sklearn.preprocessing import OneHotEncoder
 
 cat_encoder = OneHotEncoder()
 
-weather_desc_cat = df[["weather_description"]]
+weather_desc_cat = df[["weather_main"]]
 wd_cat_1hot = cat_encoder.fit_transform(weather_desc_cat)
 
 wd_cat_1hot
@@ -343,7 +335,7 @@ df_num.shape
 ```
 
 ### Data Preparation: Transformation Pipeline
-Pada bagian ini adalah pengaplikasian dari feature scaling dan perubahan kategorikal data memanfaatkan pipeline yang disediakan oleh library Sckit Learn. Hal ini dilakukan supaya lebih mudah mengaplikasikan transformasi terhadat _test data_. Dengan adanya pipeline ini juga dapat memudahkan transformasi fitur data yang akan diproses untuk model yang sudah di-_deploy_ pada cloud.
+Pada bagian ini adalah pengaplikasian dari feature scaling dan perubahan kategorikal data memanfaatkan pipeline yang disediakan oleh library Scikit Learn. Hal ini dilakukan supaya lebih mudah mengaplikasikan transformasi terhadap _test data_. Dengan adanya pipeline ini juga dapat memudahkan transformasi fitur data yang akan diproses untuk model yang sudah di-_deploy_ pada cloud.
 
 Berikut merupakan contoh aplikasi kode pipeline.
 
@@ -422,6 +414,46 @@ train_rmse, test_rmse = evaluation(forest_reg, X_train_prepared, y_train, X_test
 
 ![rf_reg_eval](https://github.com/ilhamMalik51/DicodingAppliedML/blob/76d94224f788525c2a61cce0c3eb9d6ae775f350/Proyek-Pertama/assets/rf_reg_eval.JPG)
 
+### Fine Tuning Random Forest Regressor
+Pada bagian ini akan dijelaskan upaya untuk mencari _hyperparameter_ yang optimal dengan tujuan untuk meningkatkan unjuk kerja dari model. Model yang digunakan pada bagian ini adalah Random Forest Regressor karena model ini memiliki unjuk kerja yang terbaik dibandingkan dengan kedua model sebelumnya. _Fine-tune_ model kali ini menggunakan metode _Grid Search_. Berikut adalah kode yang digunakan untuk memulai pencarian.
+
+```
+from sklearn.model_selection import GridSearchCV
+
+param_grid = [
+    {'n_estimators': [3, 10, 30, 50, 70, 100], 'max_features': [2, 4, 6]},
+    {'bootstrap': [False], 'n_estimators': [3, 10, 30, 50], 'max_features': [2, 3, 4]},
+]
+
+forest_reg_gs = RandomForestRegressor()
+
+grid_search = GridSearchCV(forest_reg_gs, param_grid, cv=5,
+                           scoring='neg_root_mean_squared_error',
+                           return_train_score=True,
+                           verbose=2,)
+
+grid_search.fit(X_train_prepared, y_train)
+```
+
+Ketika kode di atas dijalankan pencarian akan dimulai dan akan memakan waktu yang cukup lama. Pertama saya mendeklarasikan _hyperparameter_ yang akan dicari. Lalu menginstansiasi objek model Random Forest Regressor. Lalu memulai pencarian dengan menggunakan method `GridSearchCV()` yang berasal dari library Scikit Learn. Setelah pencarian selesai parameter terbaik dapat diperlihatkan dengan menggunakan kode berikut.
+
+```
+grid_search.best_params_
+```
+Ketika kode di atas dijalankan maka akan ditampilkan _hyperparameter_ terbaik.  _Hyperparameter_ terbaik yang saya dapatkan adalah
+- max_features: 6
+- n_estimators: 100
+
+Setelah diketahui _hyperparameter_ terbaik, maka dapat dilakukan evaluasi terhadap model yang telah diketahui _hyperparameter_ optimal tersebut. Berikut kode yang dapat dijalankan.
+
+```
+forest_reg_ht = RandomForestRegressor(max_features=6, n_estimators=100)
+
+train_rmse, test_rmse = evaluation(forest_reg_ht, X_train_prepared, y_train, X_test_prepared, y_test)
+```
+
+Meskipun telah dilaksanakan fine-tuning, model Random Forest Regressor secara _default_ memiliki unjuk kerja yang lebih baik.
+
 ## Evaluation
 Pada bagian ini akan membahas metrik yang digunakan dan hasil _training_ serta evaluasi dari setiap model.
 
@@ -446,12 +478,13 @@ Berikut adalah tabel akhir hasil dari _training_ dan evaluasi dari setiap model.
 | LinearRegression | 1839.376566	 | 1831.351756 |
 | DTRegressor      | 1239.391596   | 1256.800549 |
 | RFRegressor      | 1013.40798    | 1026.672234 |
+| RFRegressorFT    | 1087.930119   | 1050.877457 |
 
 Setelah _training_ dan evaluasi selesai, maka hasil dari setiap model divisualisasikan sebagai berikut.
 
 ![bar_chart_modelling](https://github.com/ilhamMalik51/DicodingAppliedML/blob/1abdea6b0d07668e604904332699cc80e989ac7e/Proyek-Pertama/assets/bar_chart_modelling.png)
 
-Berdasarkan hasil di atas dapat diambil kesimpulan bahwa model yang terbaik untuk menjadi solusi adalah **Random Forest Regressor.** Setelah dilakukan berbagai eksperimen, terlihat bahwa untuk memperbaiki nilai metrik tersebut adalah dengan mencoba mengambil data kembali dengan atribut lain. Hal ini dikarenakan dengan atribut yang ada, kebanyakan tidak memiliki korelasi linear terhadap nilai target, sehingga model Machine Learning akan kesulitan untum mencari pola dari atribut-atribut tersebut.
+Berdasarkan hasil di atas dapat diambil kesimpulan bahwa model yang terbaik untuk menjadi solusi adalah **Random Forest Regressor.** Setelah dilakukan berbagai eksperimen, terlihat bahwa untuk memperbaiki nilai metrik tersebut adalah dengan mencoba mengambil data kembali dengan atribut lain. Hal ini dikarenakan dengan atribut yang ada, atribut-atribut tersebut tidak memiliki korelasi linear terhadap nilai target, sehingga model Machine Learning akan kesulitan untuk mencari pola dari atribut-atribut tersebut.
 
 Selain itu, pendekatan lain pun dapat dicoba, seperti menggunakan teknik pendekatan permasalahan _time-series_ mungkin akan menghasilkan yang berbeda bahkan lebih baik.
 
@@ -471,3 +504,5 @@ Untuk menjawab permasalahan pada bagian Problem Statement, dapat diurutkan sebag
 
 
 **---Ini adalah bagian akhir laporan---**
+
+
