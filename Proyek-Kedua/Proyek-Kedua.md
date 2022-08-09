@@ -25,14 +25,21 @@ Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
 - Model paling optimal akan diketahui setelah dilakukan analisis dan visualisasi hasil evaluasi dari setiap model.
 
 ## Data Understanding
-Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
+Dataset _anime_ yang digunakan merupakan dataset yang ditemukan pada platform _public dataset_ Kaggle. Dataset ini memiliki informasi data terkait preferensi pengguna sebanyak 73.516 penilaian pengguna terhadap 12.294 film _anime_. Dataset ini diperoleh dari laman _Website_ myanimelist.net dengan memanfaatkan API pada _website_ tersebut. Informasi lebih lanjut terkait dataset yang digunakan dapat diakses pada [Anime Recommendations Database](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database?resource=download)
 
-Selanjutnya, uraikanlah seluruh variabel atau fitur pada data. Sebagai contoh:  
+Pada file Anime.csv, terdapat variabel-variabel sebagai berikut:
+- anime_id : Merupakan _identifier_ unik film anime.
+- name : Merupakan judul lengkap _anime._
+- genre : Merupakan genre _anime_.
+- type : Merupakan jenis _anime_ (OVA, TV, Movie).
+- episodes : Merupakan jumlah episode _anime_ tersebut.
+- rating : Merupakan rerata nilai yang didapatkan _anime_ tersebut.
+- members : Jumlah anggota yang berada pada "grup" _anime_ tersebut.
 
-Variabel-variabel pada Restaurant UCI dataset adalah sebagai berikut:
-- accepts : merupakan jenis pembayaran yang diterima pada restoran tertentu.
-- cuisine : merupakan jenis masakan yang disajikan pada restoran.
-- dst
+Pada file Rating.csv, terdapat variabel-variabel sebagai berikut:
+- user_id : Merupakan _identifier_ yang dibuat secara random sebagai user_id.
+- anime_id : Merupakan _identifier_ anime yang diberikan nilai oleh pengguna.
+- rating : Merupakan nilai yang diberikan oleh pengguna, memiliki skala hingga 10 serta nilai -1 jika user menonton dan tidak memberikan rating.
 
 **Rubrik/Kriteria Tambahan (Opsional)**:
 - Melakukan beberapa tahapan yang diperlukan untuk memahami data, contohnya teknik visualisasi data beserta insight atau exploratory data analysis.
