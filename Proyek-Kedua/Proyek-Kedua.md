@@ -18,12 +18,10 @@ Menjelaskan pernyataan masalah:
 
 Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
 - Memudahkan pengguna menemukan _anime_ yang sesuai dengan preferensi mereka secara efisien dan akurat.
-- Menemukan sebuah model yang optimal pada dataset ini.
-
-Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
+- Menemukan sebuah model yang optimal pada dataset ini yang ditunjukan dengan evaluasi metrik yang digunakan.
 
 ### Solution statements
-- Membangun sistem rekomendasi menggunakan pendekatan _Collaborative Filtering_ dengan algoritma _Deep Learning_ dan Matriks Faktorisasi.
+- Membangun sistem rekomendasi menggunakan pendekatan _Collaborative Filtering_ dengan algoritma _Deep Learning_ RecommenderNet dan Matriks Faktorisasi menggunakan metode _Deep Learning_ yang bernama _Probabilistic Matrix Factorization_ [4].
 - Model paling optimal akan diketahui setelah dilakukan analisis dan visualisasi hasil evaluasi dari setiap model.
 
 ## Data Understanding
@@ -64,6 +62,7 @@ Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, probl
 ## Referensi
 [1]. Wibowo, Agung Toto. "Leveraging side information to anime recommender system using deep learning." 2020 3rd International Seminar on Research of Information Technology and Intelligent Systems (ISRITI). IEEE, 2020.
 [2]. Hiromichi Masuda, Tadashi Sudo, Kazuo Rikukawa, Yuji Mori, Naofumi Ito, Yasuo Kameyama, and Megumi Onouchi. Anime industry report 2019, 2019.
-[3]. Lu, Jie, et al. "Recommender system application developments: a survey." Decision Support Systems 74 (2015): 12-32.
+[3]. Lu, Jie, et al. "Recommender system application developments: a survey." Decision Support Systems 74 (2015): 12-32. 
+[4]. Mnih, Andriy, and Russ R. Salakhutdinov. "Probabilistic matrix factorization." Advances in neural information processing systems 20 (2007).
 
 **---Ini adalah bagian akhir laporan---**
