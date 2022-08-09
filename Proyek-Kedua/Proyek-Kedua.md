@@ -1,42 +1,30 @@
-# Laporan Proyek Machine Learning - Nama Anda
+# Laporan Proyek Machine Learning - Muhammad Ilham Malik
 
 ## Project Overview
 
-Pada bagian ini, Kamu perlu menuliskan latar belakang yang relevan dengan proyek yang diangkat.
+Industri animasi Jepang berkembang dengan sangat cepat dan telah menghasilkan animasi film yang sangat banyak [1]. Animasi ini biasa disebut dengan istilah "anime" juga menarik perhatian dari berbagai kalangan. Hal ini menyebabkan pertumbuhan industri animasi Jepang yang sangat cepat, bahkan pada tahun 2018, market untuk industri ini sudah melebihi 1 triliun yen [2]. Namun, dengan tingginya variasi jenis animasi film Jepang tersebut akan menyebabkan sebuah masalah yaitu akan menyulitkan user untuk menemukan sebuah _anime_ yang menyamai referensi mereka.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Jelaskan mengapa proyek ini penting untuk diselesaikan.
-- Menyertakan hasil riset terkait atau referensi. Referensi yang diberikan harus berasal dari sumber yang kredibel dan author yang jelas.
-  
-  Format Referensi: [Judul Referensi](https://scholar.google.com/) 
+Masalah tersebut dapat diselesaikan dengan memanfaatkan sistem rekomendasi menggunakan pendekatan _Collaborative Filtering_ [3]. Sistem rekomendasi ini dapat memberikan keuntungan baik kepada pengguna dan industri animasi Jepang. Pengguna akan dapat menemukan sebuah _anime_ yang cocok dengan preferensi mereka secara efisien dan akurat. Industri animasi akan mendapat keuntungan lebih karena target genre animasi yang mereka buat akan dapat lebih mudah ditemukan melalui sistem rekomendasi tersebut. Selain itu, dengan diselesaikannya masalah ini akan ditemukan model yang paling optimal pada domain ini.
 
 ## Business Understanding
-
-Pada bagian ini, Anda perlu menjelaskan proses klarifikasi masalah.
-
-Bagian laporan ini mencakup:
 
 ### Problem Statements
 
 Menjelaskan pernyataan masalah:
-- Pernyataan Masalah 1
-- Pernyataan Masalah 2
-- Pernyataan Masalah n
+- Pengguna akan kesulitan menemukan _anime_ yang sesuai dengan preferensi mereka dengan jumlah _anime_ yang sangat banyak dan juga beragam.
+- Penulis belum mengetahui model yang optimal dalam merekomendasikan top-K _anime_.
 
 ### Goals
 
 Menjelaskan tujuan proyek yang menjawab pernyataan masalah:
-- Jawaban pernyataan masalah 1
-- Jawaban pernyataan masalah 2
-- Jawaban pernyataan masalah n
+- Memudahkan pengguna menemukan _anime_ yang sesuai dengan preferensi mereka secara efisien dan akurat.
+- Menemukan sebuah model yang optimal pada dataset ini.
 
 Semua poin di atas harus diuraikan dengan jelas. Anda bebas menuliskan berapa pernyataan masalah dan juga goals yang diinginkan.
 
-**Rubrik/Kriteria Tambahan (Opsional)**:
-- Menambahkan bagian “Solution Approach” yang menguraikan cara untuk meraih goals. Bagian ini dibuat dengan ketentuan sebagai berikut: 
-
-    ### Solution statements
-    - Mengajukan 2 atau lebih solution approach (algoritma atau pendekatan sistem rekomendasi).
+### Solution statements
+- Membangun sistem rekomendasi menggunakan pendekatan _Collaborative Filtering_ dengan algoritma _Deep Learning_ dan Matriks Faktorisasi.
+- Model paling optimal akan diketahui setelah dilakukan analisis dan visualisasi hasil evaluasi dari setiap model.
 
 ## Data Understanding
 Paragraf awal bagian ini menjelaskan informasi mengenai jumlah data, kondisi data, dan informasi mengenai data yang digunakan. Sertakan juga sumber atau tautan untuk mengunduh dataset. Contoh: [UCI Machine Learning Repository](https://archive.ics.uci.edu/ml/datasets/Restaurant+%26+consumer+data).
@@ -73,8 +61,9 @@ Ingatlah, metrik evaluasi yang digunakan harus sesuai dengan konteks data, probl
 **Rubrik/Kriteria Tambahan (Opsional)**: 
 - Menjelaskan formula metrik dan bagaimana metrik tersebut bekerja.
 
-**---Ini adalah bagian akhir laporan---**
+## Referensi
+[1]. Wibowo, Agung Toto. "Leveraging side information to anime recommender system using deep learning." 2020 3rd International Seminar on Research of Information Technology and Intelligent Systems (ISRITI). IEEE, 2020.
+[2]. Hiromichi Masuda, Tadashi Sudo, Kazuo Rikukawa, Yuji Mori, Naofumi Ito, Yasuo Kameyama, and Megumi Onouchi. Anime industry report 2019, 2019.
+[3]. Lu, Jie, et al. "Recommender system application developments: a survey." Decision Support Systems 74 (2015): 12-32.
 
-_Catatan:_
-- _Anda dapat menambahkan gambar, kode, atau tabel ke dalam laporan jika diperlukan. Temukan caranya pada contoh dokumen markdown di situs editor [Dillinger](https://dillinger.io/), [Github Guides: Mastering markdown](https://guides.github.com/features/mastering-markdown/), atau sumber lain di internet. Semangat!_
-- Jika terdapat penjelasan yang harus menyertakan code snippet, tuliskan dengan sewajarnya. Tidak perlu menuliskan keseluruhan kode project, cukup bagian yang ingin dijelaskan saja.
+**---Ini adalah bagian akhir laporan---**
